@@ -1,18 +1,19 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# === Output ===
+**/dist/
+**/tmp/
+**/out-tsc/
+**/.angular/cache/
 
-# Node
-/node_modules
+# === Node ===
+**/node_modules/
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
-.idea/
+# === IDEs ===
+**/.idea/
+**/.vscode/
 .project
 .classpath
 .c9/
@@ -20,23 +21,19 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
-SEP-Drive/frontend/.vscode/tasks.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
+# === Angular-specific ===
+connect.lock
+coverage/
+libpeerconnection.log
 testem.log
-/typings
+typings/
 
-# System files
+# === VS Code settings (override optional)
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# === System files ===
 .DS_Store
 Thumbs.db
