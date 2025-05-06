@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { RideRoutingModule } from './ride-routing.module';
-import { CreateRideComponent } from './create-ride/create-ride.component';
-import { ActiveRideComponent } from './active-ride/active-ride.component';
+
+import { GeolocationService } from './services/geolocation.service';
+import { PlacesService } from './services/places.service';
 
 
 @NgModule({
   declarations: [
-    CreateRideComponent,
-    ActiveRideComponent
   ],
   imports: [
     CommonModule,
-    RideRoutingModule
+    RideRoutingModule,
+  ],
+  providers: [
+    GeolocationService,
+    PlacesService
   ]
 })
 export class RideModule { }
