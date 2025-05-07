@@ -29,18 +29,6 @@ public abstract class users{
     private String password;
 
 
-    @Column(nullable = false)
-    private boolean emailVerified = false;
-
-    public boolean isEmailVerified() {
-        return emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
-    }
-
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RoleEnum role;

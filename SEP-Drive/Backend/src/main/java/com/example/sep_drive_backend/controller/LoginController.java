@@ -1,6 +1,8 @@
 package com.example.sep_drive_backend.controller;
 
 import com.example.sep_drive_backend.dto.LoginRequest;
+import com.example.sep_drive_backend.dto.TokenResponse;
+import com.example.sep_drive_backend.dto.VerifyRequest;
 import com.example.sep_drive_backend.services.LoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +33,16 @@ public class LoginController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<String> verify(@RequestParam String username, @RequestParam String code) {
-        boolean verified = loginService.verifyCode(username, code);
+    public ResponseEntity<?> verify(@RequestBody VerifyRequest verifyRequest) {
+        String token = loginService.verifyCodeAndGetToken(verifyRequest.getUsername(), verifyRequest.getCode());
 
-        if (verified) {
-            return ResponseEntity.ok("Email verification successful! You can now log in.");
+        if (token != null) {
+            return ResponseEntity.ok(new TokenResponse(token));
         } else {
             return ResponseEntity.status(400).body("Invalid verification code or user.");
         }
     }
+
+
+
 }
