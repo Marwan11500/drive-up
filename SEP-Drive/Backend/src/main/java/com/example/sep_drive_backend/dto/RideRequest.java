@@ -1,4 +1,4 @@
-package com.example.sep_drive_backend.models;
+package com.example.sep_drive_backend.dto;
 
 
 import jakarta.persistence.*;

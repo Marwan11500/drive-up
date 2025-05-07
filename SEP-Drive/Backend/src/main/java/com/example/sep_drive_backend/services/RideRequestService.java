@@ -1,7 +1,7 @@
 package com.example.sep_drive_backend.services;
 
 
-import com.example.sep_drive_backend.models.RideRequest;
+import com.example.sep_drive_backend.dto.RideRequest;
 import com.example.sep_drive_backend.repository.RideRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
