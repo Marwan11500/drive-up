@@ -1,3 +1,58 @@
+.navbar {
+  background-color: #000949 !important;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar-title {
+  font-size: 1.8rem;
+  font-weight: 650;
+  color: #ffffff;
+  font-family: 'Roboto Light', sans-serif;
+}
+
 .spacer {
   flex: 1 1 auto;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(161, 161, 161, 0.15);
+  padding: 5px 15px;
+  border-radius: 30px;
+  text-transform: none;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgba(117, 104, 104, 0.25);
+  }
+}
+
+.user-photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  object-fit: cover;
+}
+
+.username {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.login-button {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 5px 20px;
+
+  &:hover {
+    background-color: #2563eb !important;
+    box-shadow: 0.1px 2px 8px rgba(37, 99, 235, 0.3);
+  }
 }

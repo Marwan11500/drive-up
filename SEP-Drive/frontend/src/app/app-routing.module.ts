@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ProfilePageComponent} from './profile/profile-page/profile-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { RideRoutingModule } from './ride/ride-routing.module';
-import {RegisterComponent} from './auth/register/register.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const routes: Routes = [
   { path: 'ride', loadChildren: () => RideRoutingModule },

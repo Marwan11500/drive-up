@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -15,16 +15,18 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     NavbarComponent,
     LoginDialogComponent
   ],
-  imports: [
-    CommonModule,
-    MatToolbar,
-    MatButton,
-    RouterLink
-  ],
+    imports: [
+        CommonModule,
+        MatToolbar,
+        MatButton,
+        RouterLink,
+        NgOptimizedImage
+    ],
   exports: [
     ButtonComponent,
     InputComponent,
-    NavbarComponent
+    NavbarComponent,
+    NgOptimizedImage
   ]
 })
 export class SharedModule { }

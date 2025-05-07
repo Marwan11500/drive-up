@@ -1,5 +1,27 @@
-<mat-toolbar color="primary">
-  <span>SEP-Drive</span>
+<mat-toolbar class="navbar">
+  <span class="navbar-title">SEP-Drive</span>
   <span class="spacer"></span>
-  <button mat-button (click)="openLoginDialog()">Login</button>
+
+  <!-- If the user is not logged in, show the login button -->
+  <button
+    *ngIf="!isLoggedIn"
+    mat-raised-button
+    color="accent"
+    class="login-button"
+    (click)="openLoginDialog()">
+    Login
+  </button>
+
+  <!-- If the user is logged in, show the username and photo -->
+  <div *ngIf="isLoggedIn" class="user-info">
+    <img
+      ngSrc="{{ photoUrl }}"
+      alt="UserPic"
+      class="user-photo"
+      width="35"
+      height="35"
+      fetchpriority="auto"
+    />
+    <span>{{ username }}</span>
+  </div>
 </mat-toolbar>

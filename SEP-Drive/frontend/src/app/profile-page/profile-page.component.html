@@ -1,0 +1,39 @@
+<div class="profile-page">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img ngSrc="assets/placeholder.png" alt="UserPic" class="profile-photo" height="8000" width="8000"/>
+    <nav>
+      <ul>
+        <li [class.active]="selectedSection === 'account'" (click)="selectSection('account')">Account</li>
+        <li [class.active]="selectedSection === 'security'" (click)="selectSection('security')">Security</li>
+        <li [class.active]="selectedSection === 'rides'" (click)="selectSection('rides')">Rides</li>
+        <li [class.active]="selectedSection === 'settings'" (click)="selectSection('settings')">Settings</li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <ng-container [ngSwitch]="selectedSection">
+      <div *ngSwitchCase="'account'">
+        <h2>Account Information</h2>
+        <p>Details about your account...</p>
+      </div>
+      <div *ngSwitchCase="'security'">
+        <h2>Security Settings</h2>
+        <p>Manage your password, two-factor authentication...</p>
+      </div>
+      <div *ngSwitchCase="'rides'">
+        <h2>Your Rides</h2>
+        <p>All your rides will be listed here...</p>
+      </div>
+      <div *ngSwitchCase="'settings'">
+        <h2>Settings</h2>
+        <p>General settings...</p>
+      </div>
+      <div *ngSwitchDefault>
+        <h2>Select a section</h2>
+      </div>
+    </ng-container>
+  </div>
+</div>
