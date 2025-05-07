@@ -7,8 +7,8 @@ import { TwoFactorComponent } from './auth/two-factor/two-factor.component';
 const routes: Routes = [
   { path: 'ride', loadChildren: () => RideRoutingModule },
   { path: 'register', component: RegisterComponent },
-  { path: ':username', component: ProfilePageComponent },
   { path: 'two-factor', component: TwoFactorComponent },
+  { path: ':username', component: ProfilePageComponent },
 ];
 
 @NgModule({
