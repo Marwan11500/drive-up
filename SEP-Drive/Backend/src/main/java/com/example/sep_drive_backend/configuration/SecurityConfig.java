@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**").permitAll()
+                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**", "/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
