@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RideModule } from './ride/ride.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
 import { TwoFactorComponent } from './auth/two-factor/two-factor.component';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
@@ -14,7 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
-import {MatIconButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 import {
   MatDatepicker,
   MatDatepickerInput,
@@ -56,7 +57,8 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     MatDatepicker,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatButton
   ],
 
   providers: [

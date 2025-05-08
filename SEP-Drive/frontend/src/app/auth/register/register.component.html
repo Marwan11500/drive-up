@@ -1,62 +1,55 @@
-<h1>Register</h1>
-
-<mat-radio-group aria-label="Select an role">
-  <mat-radio-button value="1">Driver</mat-radio-button>
-  <mat-radio-button value="2">Customer</mat-radio-button>
-</mat-radio-group>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
+<form class="example-form" (ngSubmit)="onRegister()">
+  <h1>Register</h1>
+<br>
+  <mat-radio-group aria-label="Select a role" [(ngModel)]="Role" name="role">
+    <mat-radio-button value="Driver">Driver</mat-radio-button>
+    <mat-radio-button value="Customer">Customer</mat-radio-button>
+  </mat-radio-group>
+  <br>
+  <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
-    <input type="text" matInput
-           placeholder="username" >
+    <input matInput [(ngModel)]="Username" name="username" placeholder="Username" required>
     <mat-hint>Errors appear instantly!</mat-hint>
   </mat-form-field>
-</form>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>firstname</mat-label>
-    <input type="text" matInput
-           placeholder="firstname" >
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Firstname</mat-label>
+    <input matInput [(ngModel)]="Firstname" name="firstname" placeholder="Firstname" required>
     <mat-hint>Errors appear instantly!</mat-hint>
   </mat-form-field>
-</form>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>lastname</mat-label>
-    <input type="text" matInput
-           placeholder="lastname" >
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Lastname</mat-label>
+    <input matInput [(ngModel)]="Lastname" name="lastname" placeholder="Lastname" required>
     <mat-hint>Errors appear instantly!</mat-hint>
   </mat-form-field>
-</form>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
+  <br>
+  <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-           placeholder="Ex. pat@example.com">
+    <input matInput [(ngModel)]="Email" name="email" placeholder="Ex. pat@example.com" required email>
     <mat-hint>Errors appear instantly!</mat-hint>
   </mat-form-field>
-</form>
-<div class="password-container">
-  <mat-form-field>
-    <mat-label>Enter your password</mat-label>
-    <input matInput [type]="hidePassword? 'password' : 'text'" />
-    <button
-      mat-icon-button
-      matSuffix
-      (click)="togglePasswordVisibility()"
-      [attr.aria-label]="'Passwort anzeigen/verbergen'"
-      [attr.aria-pressed]="hidePassword"
-    >
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="Password" name="password">
+    <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'" [attr.aria-pressed]="hidePassword">
       <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
-  <mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker">
-    <mat-hint>MM/DD/YYYY</mat-hint>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="Date" name="date">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-</div>
+  <br>
+  <div class="register-button-container">
+    <button mat-raised-button color="primary" type="submit">Registrieren</button>
+  </div>
+</form>
+
+
 
 

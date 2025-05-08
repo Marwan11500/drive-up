@@ -10,6 +10,26 @@
 .example-full-width {
   width: 80%;
 }
- .password-container {
-  width: 60%;
+ .password-form mat-form-field{
+  width:25%;
+}
+.date-container mat-form-field{
+width:20%;
+}
+.register-button-container {
+  display: flex;
+  justify-content: flex-end; // Button nach rechts
+  margin-top: 20px;
+
+  button {
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background-color: #1976d2; // leicht dunkler als default blue
+    }
+  }
 }

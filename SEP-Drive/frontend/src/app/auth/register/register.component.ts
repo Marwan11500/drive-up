@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null): boolean {
-    return !!(control && control.invalid && (control.dirty || control.touched));
-  }
-}
 
 @Component({
   selector: 'app-register',
   standalone: false,
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss'] // <-- kleiner Tipp: es heißt `styleUrls`, nicht `styleUrl`
 })
 export class RegisterComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  matcher = new MyErrorStateMatcher();
+  // 🔹 Felder für das Formular:
+  Username: string = '';
+  Firstname: string = '';
+  Lastname: string = '';
+  Email: string = '';
+  Password: string = '';
+  Role: string = '';
+  Date: Date | null = null;
 
+  // 🔹 Passwort-Anzeige umschalten
   hidePassword = true;
 
   togglePasswordVisibility(): void {
@@ -25,4 +25,18 @@ export class RegisterComponent {
   }
 
 
+  // 🔹 Registrierung absenden
+  onRegister(): void {
+    const userData = {
+      Username: this.Username,
+      Firstname: this.Firstname,
+      Lastname: this.Lastname,
+      Email: this.Email,
+      Password: this.Password,
+      Role: this.Role,
+      Date: this.Date
+    };
+
+    console.log('Registrierung abgeschickt!', userData);
+  }
 }
