@@ -1,9 +1,10 @@
-import { Location } from './location.model';
+import {Location} from './location.model';
 
-export interface Ride{
+export interface Ride {
   pickup: Location;
   dropoff: Location;
-  vehicleClass: VehicleClass
+  stopovers: Location[];
+  vehicleClass: VehicleClass;
   active: boolean;
 }
 
