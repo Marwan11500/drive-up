@@ -7,13 +7,15 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { TwoFaComponent } from './components/two-fa/two-fa.component';
 
 @NgModule({
   declarations: [
     ButtonComponent,
     InputComponent,
     NavbarComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    TwoFaComponent
   ],
   imports: [
     CommonModule,
