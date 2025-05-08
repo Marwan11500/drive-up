@@ -15,7 +15,15 @@ public class RegistrationRequest {
         private String lastName;
         private Date birthDate;
         private RoleEnum role;
+        private String profilePicture;
 
+        public void setProfilePicture(String profilePicture) {
+                this.profilePicture = profilePicture;
+        }
+
+        public String getProfilePicture() {
+                return profilePicture;
+        }
 
         public String getUsername() {
                 return username;

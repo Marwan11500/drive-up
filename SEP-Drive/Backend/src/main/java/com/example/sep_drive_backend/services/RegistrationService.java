@@ -32,7 +32,7 @@ public class RegistrationService {
             customer.setBirthDate(request.getBirthDate());
             customer.setFirstName(request.getFirstName());
             customer.setLastName(request.getLastName());
-
+            customer.setProfilePicture(request.getProfilePicture());
             customerRepository.save(customer);
 
         } else if (request.getRole() == RoleEnum.Driver) {
@@ -40,13 +40,11 @@ public class RegistrationService {
             driver.setRole(request.getRole());
             driver.setUsername(request.getUsername());
             driver.setPassword(passwordEncoder.encode(request.getPassword())); // Hash here
-
-            //driver.setPassword(request.getPassword());
             driver.setEmail(request.getEmail());
             driver.setBirthDate(request.getBirthDate());
             driver.setFirstName(request.getFirstName());
             driver.setLastName(request.getLastName());
-
+            driver.setProfilePicture(request.getProfilePicture());
             driverRepository.save(driver);
         }
     }
