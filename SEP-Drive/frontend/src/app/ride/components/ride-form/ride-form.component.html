@@ -7,7 +7,8 @@
     [label]="'Pickup Location'"
     [placeholder]="'Home'"
     [control]="pickupControl"
-    (locationSelected)="onLocationSelected($event, updateType.pickup)">
+    (locationSelected)="onLocationSelected($event, updateType.pickup)"
+    (pinClicked)="pinLocation(updateType.pickup)">
 
     <button mat-icon-button matSuffix (click)="myLocation()" type="button" class="mylocation-btn"
             matTooltip="Use current location"
@@ -21,7 +22,8 @@
     [label]="'Stopover ' + (i + 1)"
     [placeholder]="'I want to stop by ...'"
     [control]="control"
-    (locationSelected)="onStopoverLocationSelected($event, i)">
+    (locationSelected)="onStopoverLocationSelected($event, i)"
+    (pinClicked)="pinLocation(i)">
 
     <button mat-icon-button matSuffix (click)="removeStopover(i)" type="button" class="delete-btn"
             matTooltip="Remove this stopover"
@@ -40,7 +42,8 @@
     [label]="'Drop-off Location'"
     [placeholder]="'Cinema'"
     [control]="dropoffControl"
-    (locationSelected)="onLocationSelected($event, updateType.dropoff)">
+    (locationSelected)="onLocationSelected($event, updateType.dropoff)"
+    (pinClicked)="pinLocation(updateType.dropoff)">
   </app-location-autocomplete>
 
   <mat-radio-group [(ngModel)]="ride.vehicleClass" name="vehicleClass">

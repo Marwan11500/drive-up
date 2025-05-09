@@ -16,6 +16,7 @@ export class LocationAutocompleteComponent implements OnInit {
   @Input() placeholder: string = '';
   @Input() control!: FormControl;
   @Output() locationSelected = new EventEmitter<Location>();
+  @Output() pinClicked = new EventEmitter<void>();
 
   filteredLocations!: Observable<Location[]>;
 
@@ -45,16 +46,5 @@ export class LocationAutocompleteComponent implements OnInit {
 
   onLocationSelected(location: Location) {
     this.locationSelected.emit(location);
-  }
-
-  //TODO: Update with map visualization API
-  pinLocation() {
-    let mockupLocation: Location = {
-      latitude: 50,
-      longitude: 50,
-      name: 'Mockup Location',
-      address: '12345 Street City State'
-    }
-    this.locationSelected.emit(mockupLocation);
   }
 }

@@ -16,7 +16,7 @@
   </span>
 
 
-  <button mat-icon-button matSuffix type="button" class="pinlocation-btn" (click)="pinLocation()"
+  <button mat-icon-button matSuffix type="button" (click)="pinClicked.emit()" class="pinlocation-btn"
           matTooltip="Use pin on map"
           matTooltipPosition="right">
     <mat-icon>location_on</mat-icon>
@@ -30,4 +30,9 @@
       <span class="address-text">{{ loc.address }}</span>
     </mat-option>
   </mat-autocomplete>
+
+  <mat-error *ngIf="control.hasError('required')">
+    This field is required.
+  </mat-error>
+
 </mat-form-field>
