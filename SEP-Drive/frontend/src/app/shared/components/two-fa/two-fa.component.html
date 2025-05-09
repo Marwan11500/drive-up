@@ -1,1 +1,15 @@
-<p>two-fa works!</p>
+<h2 mat-dialog-title>2-Factor-Authentication</h2>
+
+<mat-dialog-content>
+  <p>Please enter the confirmation code we sent you..</p>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Bestätigungscode</mat-label>
+    <input matInput [(ngModel)]="verificationCode" maxlength="6" placeholder="123456">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="verifyCode()">Confirm</button>
+</mat-dialog-actions>
