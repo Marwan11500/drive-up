@@ -123,10 +123,13 @@ export class RideFormComponent implements OnInit {
     switch (type) {
       case updateType.pickup:
         this.pickupControl.setValue(mockupLocation);
+        this.onLocationSelected(mockupLocation, updateType.pickup);
+
         break;
 
       case updateType.dropoff:
         this.dropoffControl.setValue(mockupLocation);
+        this.onLocationSelected(mockupLocation, updateType.dropoff);
         break;
 
       default:

@@ -17,11 +17,13 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {LocationAutocompleteComponent} from './components/location-autocomplete/location-autocomplete.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { RidePageComponent } from './components/ride-page/ride-page.component';
 
 @NgModule({
   declarations: [
     RideFormComponent,
-    LocationAutocompleteComponent
+    LocationAutocompleteComponent,
+    RidePageComponent
   ],
   imports: [
     CommonModule,

@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RideFormComponent} from './components/ride-form/ride-form.component';
+import {RidePageComponent} from './components/ride-page/ride-page.component';
 
 const routes: Routes = [
-  {path: "rideform", component: RideFormComponent},
+  {path: "requestride", component: RidePageComponent}
 ];
 
 @NgModule({
