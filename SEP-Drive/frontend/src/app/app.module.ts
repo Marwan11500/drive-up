@@ -22,7 +22,8 @@ import {
   MatDatepickerModule,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
 
 
 @NgModule({
@@ -58,7 +59,9 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatButton
+    MatButton,
+    MatOption,
+    MatSelect
   ],
 
   providers: [

@@ -37,7 +37,7 @@ export class LoginDialogComponent {
     dialogRef.afterClosed().subscribe(code => {
       if (code) {
         console.log('2FA Code eingegeben:', code);
-        // Hier z. B. API call machen
+
       }
     });
   }

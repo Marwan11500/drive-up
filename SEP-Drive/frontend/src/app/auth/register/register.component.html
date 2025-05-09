@@ -1,10 +1,19 @@
 <form class="example-form" (ngSubmit)="onRegister()">
   <h1>Register</h1>
 <br>
-  <mat-radio-group aria-label="Select a role" [(ngModel)]="Role" name="role">
+  <mat-radio-group [(ngModel)]="Role" [formControl]="RoleControl" aria-label="Select a role"  name="role">
     <mat-radio-button value="Driver">Driver</mat-radio-button>
     <mat-radio-button value="Customer">Customer</mat-radio-button>
   </mat-radio-group>
+  <br>
+  <mat-form-field appearance="fill" class="car-select">
+    <mat-label>Choose a car</mat-label>
+    <mat-select [formControl]="CarControl">
+      <mat-option value="Small">Small</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Large">Large</mat-option>
+    </mat-select>
+  </mat-form-field>
   <br>
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
@@ -46,7 +55,7 @@
   </mat-form-field>
   <br>
   <div class="register-button-container">
-    <button mat-raised-button color="primary" type="submit">Registrieren</button>
+    <button mat-raised-button color="primary" type="submit" >Registrieren</button>
   </div>
 </form>
 
