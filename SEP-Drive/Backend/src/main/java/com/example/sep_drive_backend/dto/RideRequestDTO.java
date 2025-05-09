@@ -1,79 +1,40 @@
 package com.example.sep_drive_backend.dto;
 
+import com.example.sep_drive_backend.constants.VehicleClassEnum;
+
 public class RideRequestDTO {
-    private String benutzername;    // Der Kunde, der die Anfrage stellt
-    private String startOrt;        // Startadresse
-    private String zielOrt;         // Zieladresse
-    private String fahrzeugKlasse;  // Fahrzeugklasse (z. B. klein, mittel, deluxe)
+    private String username;
+    private String startLocation;
+    private String destinationLocation;
+    private VehicleClassEnum vehicleClass;
 
-    private double startLat;        // Startpunkt Latitude (geografische Koordinaten)
-    private double startLng;        // Startpunkt Longitude
-    private double zielLat;         // Zielpunkt Latitude
-    private double zielLng;         // Zielpunkt Longitude
+    private double startLat;
+    private double startLng;
+    private double destinationLat;
+    private double destinationLng;
 
-    // === Getter und Setter ===
+    // Getter und Setter
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getBenutzername() {
-        return benutzername;
-    }
+    public String getStartLocation() { return startLocation; }
+    public void setStartLocation(String startLocation) { this.startLocation = startLocation; }
 
-    public void setBenutzername(String benutzername) {
-        this.benutzername = benutzername;
-    }
+    public String getDestinationLocation() { return destinationLocation; }
+    public void setDestinationLocation(String destinationLocation) { this.destinationLocation = destinationLocation; }
 
-    public String getStartOrt() {
-        return startOrt;
-    }
+    public VehicleClassEnum getVehicleClass() { return vehicleClass; }
+    public void setVehicleClass(VehicleClassEnum vehicleClass) { this.vehicleClass = vehicleClass; }
 
-    public void setStartOrt(String startOrt) {
-        this.startOrt = startOrt;
-    }
+    public double getStartLat() { return startLat; }
+    public void setStartLat(double startLat) { this.startLat = startLat; }
 
-    public String getZielOrt() {
-        return zielOrt;
-    }
+    public double getStartLng() { return startLng; }
+    public void setStartLng(double startLng) { this.startLng = startLng; }
 
-    public void setZielOrt(String zielOrt) {
-        this.zielOrt = zielOrt;
-    }
+    public double getDestinationLat() { return destinationLat; }
+    public void setDestinationLat(double destinationLat) { this.destinationLat = destinationLat; }
 
-    public String getFahrzeugKlasse() {
-        return fahrzeugKlasse;
-    }
-
-    public void setFahrzeugKlasse(String fahrzeugKlasse) {
-        this.fahrzeugKlasse = fahrzeugKlasse;
-    }
-
-    public double getStartLat() {
-        return startLat;
-    }
-
-    public void setStartLat(double startLat) {
-        this.startLat = startLat;
-    }
-
-    public double getStartLng() {
-        return startLng;
-    }
-
-    public void setStartLng(double startLng) {
-        this.startLng = startLng;
-    }
-
-    public double getZielLat() {
-        return zielLat;
-    }
-
-    public void setZielLat(double zielLat) {
-        this.zielLat = zielLat;
-    }
-
-    public double getZielLng() {
-        return zielLng;
-    }
-
-    public void setZielLng(double zielLng) {
-        this.zielLng = zielLng;
-    }
+    public double getDestinationLng() { return destinationLng; }
+    public void setDestinationLng(double destinationLng) { this.destinationLng = destinationLng; }
 }

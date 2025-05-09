@@ -1,7 +1,8 @@
 package com.example.sep_drive_backend.models;
 
-
+import com.example.sep_drive_backend.constants.VehicleClassEnum;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,73 +12,140 @@ public class RideRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String benutzername; // Der Kunde, der die Anfrage stellt
+    private String username; // The customer who made the request
 
-    private String startOrt;// Startadresse
-    private double startLat;
-    private double startLng;
+    private String startAddress;
+    private double startLatitude;
+    private double startLongitude;
 
-    private String zielOrt;       // Zieladresse
-    private double zielLat;
-    private double zielLng;
+    private String destinationAddress;
+    private double destinationLatitude;
+    private double destinationLongitude;
 
-    private String fahrzeugKlasse; // klein, mittel, deluxe
+    @Enumerated(EnumType.STRING)
+    private VehicleClassEnum vehicleClass; // SMALL, MEDIUM, LARGE
 
-    private boolean aktiv; // Ob die Anfrage aktiv ist
+    private boolean active; // Whether the request is active
 
-    private LocalDateTime erstelltAm;
+    private LocalDateTime createdAt;
 
-    private double distanzKm;
-    private double dauerMin;
+    private double distanceKm;
+    private double durationMin;
 
     @Lob
-    private String zwischenstoppsJson;
+    private String stopoversJson; // Optional JSON of intermediate stopovers
 
-    // === GETTER & SETTER ===
+    // === GETTERS & SETTERS ===
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getBenutzername() { return benutzername; }
-    public void setBenutzername(String benutzername) { this.benutzername = benutzername; }
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getStartOrt() { return startOrt;}
-    public void setStartOrt(String startOrt) { this.startOrt = startOrt; }
+    public String getStartAddress() {
+        return startAddress;
+    }
 
-    public double getStartLat() { return startLat; }
-    public void setStartLat(double startLat) { this.startLat = startLat; }
+    public void setStartAddress(String startAddress) {
+        this.startAddress = startAddress;
+    }
 
-    public double getStartLng() { return startLng; }
-    public void setStartLng(double startLng) { this.startLng = startLng; }
+    public double getStartLatitude() {
+        return startLatitude;
+    }
 
+    public void setStartLatitude(double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
 
-    public String getZielOrt() { return zielOrt; }
-    public void setZielOrt(String zielOrt) { this.zielOrt = zielOrt; }
+    public double getStartLongitude() {
+        return startLongitude;
+    }
 
-    public double getZielLat() { return zielLat; }
-    public void setZielLat(double zielLat) { this.zielLat = zielLat; }
+    public void setStartLongitude(double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
 
-    public double getZielLng() { return zielLng; }
-    public void setZielLng(double zielLng) { this.zielLng = zielLng; }
+    public String getDestinationAddress() {
+        return destinationAddress;
+    }
 
+    public void setDestinationAddress(String destinationAddress) {
+        this.destinationAddress = destinationAddress;
+    }
 
-    public String getFahrzeugKlasse() { return fahrzeugKlasse; }
-    public void setFahrzeugKlasse(String fahrzeugKlasse) { this.fahrzeugKlasse = fahrzeugKlasse; }
+    public double getDestinationLatitude() {
+        return destinationLatitude;
+    }
 
-    public boolean isAktiv() { return aktiv;}
-    public void setAktiv(boolean aktiv) { this.aktiv = aktiv; }
+    public void setDestinationLatitude(double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
+    }
 
-    public LocalDateTime getErstelltAm() { return erstelltAm; }
-    public void setErstelltAm(LocalDateTime erstelltAm) { this.erstelltAm = erstelltAm; }
+    public double getDestinationLongitude() {
+        return destinationLongitude;
+    }
 
-    public double getDistanzKm() { return distanzKm; }
-    public void setDistanzKm(double distanzKm) { this.distanzKm = distanzKm; }
+    public void setDestinationLongitude(double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
+    }
 
-    public double getDauerMin() { return dauerMin; }
-    public void setDauerMin(double dauerMin) { this.dauerMin = dauerMin; }
+    public VehicleClassEnum getVehicleClass() {
+        return vehicleClass;
+    }
 
-    public String getZwischenstopps() { return zwischenstoppsJson; }
-    public void setZwischenstopps(String  zwischenstopps) { this.zwischenstoppsJson = zwischenstopps; }
+    public void setVehicleClass(VehicleClassEnum vehicleClass) {
+        this.vehicleClass = vehicleClass;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public double getDistanceKm() {
+        return distanceKm;
+    }
+
+    public void setDistanceKm(double distanceKm) {
+        this.distanceKm = distanceKm;
+    }
+
+    public double getDurationMin() {
+        return durationMin;
+    }
+
+    public void setDurationMin(double durationMin) {
+        this.durationMin = durationMin;
+    }
+
+    public String getStopoversJson() {
+        return stopoversJson;
+    }
+
+    public void setStopoversJson(String stopoversJson) {
+        this.stopoversJson = stopoversJson;
+    }
 }

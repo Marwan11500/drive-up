@@ -1,5 +1,6 @@
 package com.example.sep_drive_backend.controller;
 
+import com.example.sep_drive_backend.constants.VehicleClassEnum;
 import com.example.sep_drive_backend.dto.RideRequestDTO;
 import com.example.sep_drive_backend.models.RideRequest;
 import com.example.sep_drive_backend.services.RideRequestService;
@@ -8,39 +9,35 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/ride-requests")
 public class RideRequestController {
 
     @Autowired
-    private RideRequestService service;
+    private RideRequestService rideRequestService;
 
-    // Neue Fahranfrage erstellen
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping
-    public RideRequest create(@RequestBody RideRequestDTO requestDTO) {
-        // Hier wird RideRequestDTO in RideRequest umgewandelt
-        RideRequest rideRequest = new RideRequest();
-        rideRequest.setBenutzername(requestDTO.getBenutzername());
-        rideRequest.setStartOrt(requestDTO.getStartOrt());
-        rideRequest.setZielOrt(requestDTO.getZielOrt());
-        rideRequest.setFahrzeugKlasse(requestDTO.getFahrzeugKlasse());
-        rideRequest.setStartLat(requestDTO.getStartLat());
-        rideRequest.setStartLng(requestDTO.getStartLng());
-        rideRequest.setZielLat(requestDTO.getZielLat());
-        rideRequest.setZielLng(requestDTO.getZielLng());
+    public RideRequest createRideRequest(@RequestBody RideRequestDTO dto) {
 
-        return service.createRideRequest(rideRequest);
+
+        return rideRequestService.createRideRequestFromDTO(dto);
+    }
+    // Neue Methode, um Fahranfragen basierend auf der Fahrzeugklasse zu erhalten
+    @GetMapping("/by-vehicle-class/{vehicleClass}")
+    public List<RideRequest> getRequestsByVehicleClass(@PathVariable VehicleClassEnum vehicleClass) {
+        return rideRequestService.getRequestsByVehicleClass(vehicleClass);
     }
 
-    // Alle Fahranfragen auflisten
     @GetMapping
-    public List<RideRequest> list() {
-        return service.getAllRequests();
+    public List<RideRequest> getAllRideRequests() {
+        return rideRequestService.getAllRequests();
     }
 
-    // Fahranfrage per ID löschen
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteById(id);
+    public void deleteRideRequest(@PathVariable Long id) {
+        rideRequestService.deleteById(id);
     }
 }
