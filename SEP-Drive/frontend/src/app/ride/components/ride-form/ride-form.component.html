@@ -53,7 +53,7 @@
   </mat-radio-group>
 
   <div class="padding">
-    <button mat-fab extended class="wide-btn" (click)="submit()">
+    <button mat-fab extended class="wide-btn" (click)="submit()" [disabled]="isFormInvalid">
       Submit Ride Request
     </button>
   </div>

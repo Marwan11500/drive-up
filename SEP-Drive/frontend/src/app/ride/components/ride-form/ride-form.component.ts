@@ -142,6 +142,14 @@ export class RideFormComponent implements OnInit {
     }
   }
 
+  get isFormInvalid(): boolean {
+    return (
+      this.pickupControl.invalid ||
+      this.dropoffControl.invalid ||
+      this.stopoversControl.controls.some(c => c.invalid)
+    );
+  }
+
   //TODO: Validation logic and Submtit logic
   submit() {
     console.log('done');
