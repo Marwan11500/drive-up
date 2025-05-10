@@ -38,13 +38,53 @@ public class RideRequest {
 
     @Column
     private String startAddress;
+
+    private Double startLatitude;
+    private Double startLongitude;
+
     @Column
     private String destinationAddress;
+
+    private Double destinationLatitude;
+    private Double destinationLongitude;
 
 
     @Column
     @Enumerated(EnumType.STRING)
     private VehicleClassEnum vehicleClass; // SMALL, MEDIUM, LARGE
+    public Double getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(Double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public Double getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(Double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public Double getDestinationLatitude() {
+        return destinationLatitude;
+    }
+
+    public void setDestinationLatitude(Double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
+    }
+
+    public Double getDestinationLongitude() {
+        return destinationLongitude;
+    }
+
+    public void setDestinationLongitude(Double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
+    }
+
+
 
 
     // === GETTERS & SETTERS ===

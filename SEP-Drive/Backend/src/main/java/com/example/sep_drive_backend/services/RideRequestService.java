@@ -47,7 +47,11 @@ public class RideRequestService {
         RideRequest request = new RideRequest();
         request.setCustomer(customer);
         request.setStartAddress(dto.getStartAddress());
+        request.setStartLatitude(dto.getStartLatitude());
+        request.setStartLongitude(dto.getStartLongitude());
         request.setDestinationAddress(dto.getDestinationAddress());
+        request.setDestinationLatitude(dto.getDestinationLatitude());
+        request.setDestinationLongitude(dto.getDestinationLongitude());
         request.setVehicleClass(dto.getVehicleClass()); // now uses enum
         customer.setActive(true);
         customerRepository.save(customer);

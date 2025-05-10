@@ -13,13 +13,63 @@ public class RideRequestDTO {
         this.startAddress = request.getStartAddress();
         this.destinationAddress = request.getDestinationAddress();
         this.vehicleClass = request.getVehicleClass();
+        this.startLatitude = request.getStartLatitude();
+        this.startLongitude = request.getStartLongitude();
+        this.destinationLatitude = request.getDestinationLatitude();
+        this.destinationLongitude = request.getDestinationLongitude();
     }
 
 
     private String userName;
+
+
     private String startAddress;
+
+    private Double startLatitude;
+    private Double startLongitude;
+
     private String destinationAddress;
+
+    private Double destinationLatitude;
+    private Double destinationLongitude;
+
+
     private VehicleClassEnum vehicleClass;
+
+
+    public Double getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(Double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public Double getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(Double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public Double getDestinationLatitude() {
+        return destinationLatitude;
+    }
+
+    public void setDestinationLatitude(Double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
+    }
+
+    public Double getDestinationLongitude() {
+        return destinationLongitude;
+    }
+
+    public void setDestinationLongitude(Double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
+    }
+
+
 
     public String getUserName() {
         return this.userName;
