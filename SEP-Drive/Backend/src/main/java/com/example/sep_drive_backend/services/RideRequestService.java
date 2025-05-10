@@ -15,83 +15,75 @@ import java.util.Map;
 @Service
 public class RideRequestService {
 
-    @Autowired
-    private RideRequestRepository repository;
 
-    private final String API_KEY = "SEPDrive3721"; // TODO: store this externally
-    private final String ROUTE_URL = "https://api.openrouteservice.org/v2/directions/driving-car";
+    private final RideRequestRepository repository;
 
-    public RideRequest createRideRequestFromDTO(RideRequestDTO dto) {
+    public RideRequestService(RideRequestRepository repository) {
+        this.repository = repository;
+    }
+
+
+    public void createRideRequest(RideRequestDTO dto) {
 
         RideRequest request = new RideRequest();
-        request.setUsername(dto.getUsername());
+        request.setCustomer(dto.getCustomer());
         request.setStartAddress(dto.getStartLocation());
         request.setDestinationAddress(dto.getDestinationLocation());
         request.setVehicleClass(dto.getVehicleClass()); // now uses enum
-        request.setStartLatitude(dto.getStartLat());
-        request.setStartLongitude(dto.getStartLng());
-        request.setDestinationLatitude(dto.getDestinationLat());
-        request.setDestinationLongitude(dto.getDestinationLng());
 
-        return createRideRequest(request);
+        repository.save(request);
     }
 
 
-    public RideRequest createRideRequest(RideRequest request) {
-        // Only allow one active ride request per user
-        List<RideRequest> existingRequests = repository.findByUsernameAndActiveTrue(request.getUsername());
-        if (!existingRequests.isEmpty()) {
-            throw new IllegalStateException("You already have an active ride request.");
-        }
+//    public RideRequest createRideRequest(RideRequest request) {
+//        // Only allow one active ride request per user
+//        List<RideRequest> existingRequests = repository.findByUsernameAndActiveTrue(request.getUsername());
+//        if (!existingRequests.isEmpty()) {
+//            throw new IllegalStateException("You already have an active ride request.");
+//        }
 
-        // Calculate route info
-        double[][] coordinates = buildCoordinatesArray(request);
-        Map<String, Object> routeInfo = fetchRouteInfo(coordinates);
-
-        double distanceKm = ((Number)((Map<?, ?>) routeInfo.get("distance"))).doubleValue() / 1000.0;
-        double durationMin = ((Number)((Map<?, ?>) routeInfo.get("duration"))).doubleValue() / 60.0;
-
-        // Save ride request
-        request.setDistanceKm(distanceKm);
-        request.setDurationMin(durationMin);
-        request.setActive(true);
-        request.setCreatedAt(LocalDateTime.now());
-
-        return repository.save(request);
-    }
-
-    private double[][] buildCoordinatesArray(RideRequest request) {
-        return new double[][] {
-                { request.getStartLongitude(), request.getStartLatitude() },
-                { request.getDestinationLongitude(), request.getDestinationLatitude() }
-        };
-    }
-
-    private Map<String, Object> fetchRouteInfo(double[][] coords) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        Map<String, Object> body = Map.of("coordinates", coords);
-        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-        headers.set("Authorization", API_KEY);
-        headers.set("Content-Type", "application/json");
-
-        var entity = new org.springframework.http.HttpEntity<>(body, headers);
-        var response = restTemplate.postForEntity(ROUTE_URL, entity, Map.class);
-
-        List<?> routes = (List<?>) response.getBody().get("routes");
-        return (Map<String, Object>) ((Map<?, ?>) routes.get(0)).get("summary");
-    }
-
-    public List<RideRequest> getAllRequests() {
-        return repository.findAll();
-    }
-
-    public List<RideRequest> getRequestsByVehicleClass(VehicleClassEnum vehicleClass) {
-        return repository.findByVehicleClass(vehicleClass);
-    }
+//        // Calculate route info
+//        double[][] coordinates = buildCoordinatesArray(request);
+//        Map<String, Object> routeInfo = fetchRouteInfo(coordinates);
+//
+//        double distanceKm = ((Number) ((Map<?, ?>) routeInfo.get("distance"))).doubleValue() / 1000.0;
+//        double durationMin = ((Number) ((Map<?, ?>) routeInfo.get("duration"))).doubleValue() / 60.0;
+//
+//        // Save ride request
+//        request.setDistanceKm(distanceKm);
+//        request.setDurationMin(durationMin);
+//        request.setActive(true);
+//        request.setCreatedAt(LocalDateTime.now());
+//
+//        return repository.save(request);
+//    }
+//
+//    private double[][] buildCoordinatesArray(RideRequest request) {
+//        return new double[][]{
+//                {request.getStartLongitude(), request.getStartLatitude()},
+//                {request.getDestinationLongitude(), request.getDestinationLatitude()}
+//        };
+//    }
+//
+//    private Map<String, Object> fetchRouteInfo(double[][] coords) {
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        Map<String, Object> body = Map.of("coordinates", coords);
+//        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+//        headers.set("Authorization", API_KEY);
+//        headers.set("Content-Type", "application/json");
+//
+//        var entity = new org.springframework.http.HttpEntity<>(body, headers);
+//        var response = restTemplate.postForEntity(ROUTE_URL, entity, Map.class);
+//
+//        List<?> routes = (List<?>) response.getBody().get("routes");
+//        return (Map<String, Object>) ((Map<?, ?>) routes.get(0)).get("summary");
+//    }
+//
+//    public List<RideRequest> getAllRequests() {
+//        return repository.findAll();
+//    }
+//
 
 
-    public void deleteById(Long id) {
-        repository.deleteById(id);
-    }
 }

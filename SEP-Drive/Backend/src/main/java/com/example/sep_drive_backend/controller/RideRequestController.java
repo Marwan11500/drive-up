@@ -5,6 +5,8 @@ import com.example.sep_drive_backend.dto.RideRequestDTO;
 import com.example.sep_drive_backend.models.RideRequest;
 import com.example.sep_drive_backend.services.RideRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,30 +16,32 @@ import java.util.List;
 @RequestMapping("/api/ride-requests")
 public class RideRequestController {
 
-    @Autowired
+
     private RideRequestService rideRequestService;
+    @Autowired
+    public RideRequestController(RideRequestService rideRequestService) {
+        this.rideRequestService = rideRequestService;
+    }
 
+    @PostMapping("/")
+    public ResponseEntity createRideRequest(@RequestBody RideRequestDTO dto) {
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping
-    public RideRequest createRideRequest(@RequestBody RideRequestDTO dto) {
-
-
-        return rideRequestService.createRideRequestFromDTO(dto);
+         rideRequestService.createRideRequest(dto);
+         return ResponseEntity.status(HttpStatus.CREATED).body("RideRequest Created");
     }
     // Neue Methode, um Fahranfragen basierend auf der Fahrzeugklasse zu erhalten
-    @GetMapping("/by-vehicle-class/{vehicleClass}")
-    public List<RideRequest> getRequestsByVehicleClass(@PathVariable VehicleClassEnum vehicleClass) {
-        return rideRequestService.getRequestsByVehicleClass(vehicleClass);
-    }
-
-    @GetMapping
-    public List<RideRequest> getAllRideRequests() {
-        return rideRequestService.getAllRequests();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteRideRequest(@PathVariable Long id) {
-        rideRequestService.deleteById(id);
-    }
+//    @GetMapping("/by-vehicle-class/{vehicleClass}")
+//    public List<RideRequest> getRequestsByVehicleClass(@PathVariable VehicleClassEnum vehicleClass) {
+//        return rideRequestService.getRequestsByVehicleClass(vehicleClass);
+//    }
+//
+//    @GetMapping
+//    public List<RideRequest> getAllRideRequests() {
+//        return rideRequestService.getAllRequests();
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public void deleteRideRequest(@PathVariable Long id) {
+//        rideRequestService.deleteById(id);
+//    }
 }
