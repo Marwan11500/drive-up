@@ -9,13 +9,13 @@ import {UsersService} from '../services/users.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  Username: string = '';
-  Firstname: string = '';
-  Lastname: string = '';
-  Email: string = '';
-  Password: string = '';
-  Role: string = '';
-  Date: Date | null = null;
+  username: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  password: string = '';
+  role: string = '';
+  birthDate: Date | null = null;
   RoleControl = new FormControl('');
   CarControl = new FormControl({ value: '', disabled: true });
 
@@ -40,13 +40,13 @@ export class RegisterComponent {
   // 🔹 Registrierung absenden
   onRegister(): void {
     const userData = {
-      Username: this.Username,
-      Firstname: this.Firstname,
-      Lastname: this.Lastname,
-      Email: this.Email,
-      Password: this.Password,
-      Role: this.Role,
-      Date: this.Date
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      password: this.password,
+      role: this.role,
+      birthDate: this.birthDate
     };
 
     this.usersService.createUser(userData).subscribe({
