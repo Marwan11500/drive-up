@@ -1,0 +1,24 @@
+<div style="width: 500px; float: left;">
+  <app-location-card
+    [location]="mockupride.pickup"
+    label="Pick up at">
+  </app-location-card>
+
+
+  <ng-container *ngFor="let stopover of mockupride.stopovers; index as i">
+    <app-location-card
+      [location]="stopover"
+      [label]="'Stopover ' + (i + 1)">
+    </app-location-card>
+  </ng-container>
+
+  <app-location-card
+    [location]="mockupride.dropoff"
+    label="Drop off at">
+  </app-location-card>
+
+  <button mat-fab extended class="deactivation-btn" (click)="deactivateRide()">
+    Deactivate your ride
+  </button>
+
+</div>
