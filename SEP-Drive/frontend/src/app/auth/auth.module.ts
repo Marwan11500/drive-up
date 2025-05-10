@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { TwoFactorComponent } from './two-factor/two-factor.component';
+import { FormsModule } from '@angular/forms';
+import {UsersService} from './services/users.service';
 
 
 @NgModule({
@@ -12,7 +14,11 @@ import { TwoFactorComponent } from './two-factor/two-factor.component';
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    FormsModule,
+  ],
+  providers: [
+    UsersService
   ]
 })
 export class AuthModule { }

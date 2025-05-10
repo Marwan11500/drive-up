@@ -1,0 +1,43 @@
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.car-select {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 80%;
+}
+ .password-form mat-form-field{
+  width:25%;
+}
+.date-container mat-form-field{
+width:20%;
+}
+.register-button-container {
+  display: flex;
+  justify-content: flex-end; // Button nach rechts
+  margin-top: 20px;
+
+  button {
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background-color: #1976d2; // leicht dunkler als default blue
+    }
+  }
+}
