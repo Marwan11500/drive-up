@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
-    @Autowired
-    private final CustomerRepository customerRepository; // To find the customer by username
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService, CustomerRepository customerRepository) {
+    public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
-        this.customerRepository = customerRepository;
     }
 
     @PostMapping("/register")
