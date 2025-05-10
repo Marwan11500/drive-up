@@ -13,14 +13,34 @@ public class RideRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_username", referencedColumnName = "username", nullable = false)
+    private Customer customer; // This will be the reference to the Customer entity via 'username'
+
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public RideRequest() {}
+    public RideRequest(Long id, String startAddress, String destinationAddress, VehicleClassEnum vehicleClass, Customer customer) {
+        this.id = id;
+        this.startAddress = startAddress;
+        this.destinationAddress = destinationAddress;
+        this.vehicleClass = vehicleClass;
+        this.customer = customer;
+    }
 
     @Column
     private String startAddress;
     @Column
     private String destinationAddress;
+
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -37,13 +57,7 @@ public class RideRequest {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     public String getStartAddress() {
         return startAddress;

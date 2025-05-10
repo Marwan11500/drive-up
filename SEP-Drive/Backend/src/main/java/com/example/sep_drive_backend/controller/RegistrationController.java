@@ -1,6 +1,7 @@
 package com.example.sep_drive_backend.controller;
 
 import com.example.sep_drive_backend.dto.RegistrationRequest;
+import com.example.sep_drive_backend.repository.CustomerRepository;
 import com.example.sep_drive_backend.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+    @Autowired
+    private final CustomerRepository customerRepository; // To find the customer by username
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService, CustomerRepository customerRepository) {
         this.registrationService = registrationService;
+        this.customerRepository = customerRepository;
     }
 
     @PostMapping("/register")

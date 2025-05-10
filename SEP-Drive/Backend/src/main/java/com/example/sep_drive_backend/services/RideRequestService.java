@@ -1,6 +1,8 @@
 package com.example.sep_drive_backend.services;
 
+import com.example.sep_drive_backend.models.Customer;
 import com.example.sep_drive_backend.models.RideRequest;
+import com.example.sep_drive_backend.repository.CustomerRepository;
 import com.example.sep_drive_backend.repository.RideRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,27 +13,60 @@ import com.example.sep_drive_backend.dto.RideRequestDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class RideRequestService {
 
-
+    @Autowired
     private final RideRequestRepository repository;
 
-    public RideRequestService(RideRequestRepository repository) {
+    @Autowired
+    private final CustomerRepository customerRepository; // To find the customer by username
+
+
+    public RideRequestService(RideRequestRepository repository, CustomerRepository customerRepository) {
         this.repository = repository;
+        this.customerRepository = customerRepository;
     }
 
 
-    public void createRideRequest(RideRequestDTO dto) {
+    public RideRequest createRideRequest(RideRequestDTO dto) {
+        Optional<Customer> customerOptional = customerRepository.findByUsername(dto.getUserName());
+
+        if (!customerOptional.isPresent()) {
+            throw new IllegalArgumentException("Customer with username " + dto.getUserName() + " not found");
+        }
+
+        Customer customer = customerOptional.get();
+        if (customer.isActive()) {
+            throw new IllegalStateException("Customer already has an active ride request.");
+        }
 
         RideRequest request = new RideRequest();
-        request.setCustomer(dto.getCustomer());
-        request.setStartAddress(dto.getStartLocation());
-        request.setDestinationAddress(dto.getDestinationLocation());
+        request.setCustomer(customer);
+        request.setStartAddress(dto.getStartAddress());
+        request.setDestinationAddress(dto.getDestinationAddress());
         request.setVehicleClass(dto.getVehicleClass()); // now uses enum
+        customer.setActive(true);
+        customerRepository.save(customer);
+        return repository.save(request);
+    }
 
-        repository.save(request);
+    public RideRequest getActiveRideRequestForCustomer(String username) {
+        return repository.findByCustomerUsernameAndCustomerActiveTrue(username)
+                .orElseThrow(() -> new NoSuchElementException("No active ride request found for user: " + username));
+    }
+
+    public void deleteActiveRideRequest(String username) {
+        RideRequest request = repository.findByCustomerUsernameAndCustomerActiveTrue(username)
+                .orElseThrow(() -> new NoSuchElementException("No active ride request to delete"));
+
+        Customer customer = request.getCustomer();
+        customer.setActive(false);
+        customerRepository.save(customer);
+        repository.delete(request);
     }
 
 

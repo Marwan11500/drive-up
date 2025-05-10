@@ -23,12 +23,30 @@ public class RideRequestController {
         this.rideRequestService = rideRequestService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity createRideRequest(@RequestBody RideRequestDTO dto) {
-
-         rideRequestService.createRideRequest(dto);
-         return ResponseEntity.status(HttpStatus.CREATED).body("RideRequest Created");
+    @PostMapping
+    public ResponseEntity<RideRequest> createRideRequest(@RequestBody RideRequestDTO dto) {
+        try {
+            // Call the service to create the RideRequest
+            RideRequest rideRequest = rideRequestService.createRideRequest(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(rideRequest);
+        } catch (IllegalArgumentException e) {
+            // Handle case where customer is not found and return a 404 status code
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<RideRequestDTO> getActiveRideRequest(@PathVariable String username) {
+        RideRequest request = rideRequestService.getActiveRideRequestForCustomer(username);
+        return ResponseEntity.ok(new RideRequestDTO(request));
+    }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Void> deleteActiveRideRequest(@PathVariable String username) {
+        rideRequestService.deleteActiveRideRequest(username);
+        return ResponseEntity.noContent().build();
+    }
+
     // Neue Methode, um Fahranfragen basierend auf der Fahrzeugklasse zu erhalten
 //    @GetMapping("/by-vehicle-class/{vehicleClass}")
 //    public List<RideRequest> getRequestsByVehicleClass(@PathVariable VehicleClassEnum vehicleClass) {
