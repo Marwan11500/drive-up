@@ -1,0 +1,24 @@
+<mat-card appearance="outlined" class="location-card">
+  <div class="location-header">
+    <mat-icon>location_on</mat-icon>
+    <span class="location-label">{{ label }}</span>
+  </div>
+  <mat-card-content>
+    <div class="location-field name">
+      <span class="field-title">Name:</span>
+      <span class="field-value bold">{{ location.name }}</span>
+    </div>
+    <div class="location-field">
+      <span class="field-title">Address:</span>
+      <span class="field-value">{{ location.address }}</span>
+    </div>
+    <div class="location-field coordinates">
+      <span class="field-title">Latitude:</span>
+      <span class="field-value grey-italic">{{ location.latitude }}</span>
+    </div>
+    <div class="location-field coordinates">
+      <span class="field-title">Longitude:</span>
+      <span class="field-value grey-italic">{{ location.longitude }}</span>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -19,12 +19,17 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {LocationAutocompleteComponent} from './components/location-autocomplete/location-autocomplete.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {ActiveRidePageComponent} from './components/active-ride-page/active-ride-page.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {LocationCardComponent} from './components/location-card/location-card.component';
 
 @NgModule({
   declarations: [
     RideFormComponent,
     LocationAutocompleteComponent,
-    RidePageComponent
+    RidePageComponent,
+    ActiveRidePageComponent,
+    LocationCardComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +46,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatTooltip,
     MatButton,
     MatFabButton,
-    MatRadioModule
+    MatRadioModule,
+    MatCard,
+    MatCardContent
   ],
   providers: [
     GeolocationService,

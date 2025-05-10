@@ -9,6 +9,7 @@ import {PlacesService} from '../../services/places.service';
 import {FormArray, FormControl, Validators} from '@angular/forms';
 import {catchError, debounceTime, distinctUntilChanged, Observable, of, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 enum updateType {
   pickup = -2,
@@ -42,7 +43,8 @@ export class RideFormComponent implements OnInit {
 
   constructor(
     private geolocationService: GeolocationService,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private router: Router,
   ) {
   }
 
@@ -144,5 +146,6 @@ export class RideFormComponent implements OnInit {
   submit() {
     console.log('done');
     this.ride.active = true;
+    this.router.navigate(['/ride/active']);
   }
 }
