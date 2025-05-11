@@ -1,5 +1,40 @@
-<mat-toolbar color="primary">
-  <span>SEP-Drive</span>
+<mat-toolbar class="navbar">
+  <button mat-button class="navbar-title" (click)="goHome()">SEP-Drive</button>
   <span class="spacer"></span>
-  <button mat-button (click)="openLoginDialog()">Login</button>
+
+  <!-- 🔎 Search Bar -->
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      placeholder="Search Username"
+      [formControl]="usernameControl"
+      (keydown.enter)="searchUser(usernameControl.value)"
+    />
+    <button class="search-button" (click)="searchUser(usernameControl.value)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <!-- If the user is not logged in, show the login button -->
+  <button
+    *ngIf="!isLoggedIn"
+    mat-raised-button
+    color="accent"
+    class="login-button"
+    (click)="openLoginDialog()">
+    Login
+  </button>
+
+  <!-- If the user is logged in, show the username and photo -->
+  <div *ngIf="isLoggedIn" class="user-info" (click)="goToProfile()">
+    <img
+      ngSrc="{{ photoUrl }}"
+      alt="UserPic"
+      class="user-photo"
+      width="35"
+      height="35"
+      fetchpriority="auto"
+    />
+    <span class="username">{{ username }}</span>
+  </div>
 </mat-toolbar>

@@ -28,12 +28,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(customizer -> customizer.configurationSource(corsConfigurationSource())) // Neue CORS Konfiguration
-                .csrf(csrf -> csrf.disable())  // CSRF deaktivieren
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // Preflight-Request zulassen
-                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**", "/api/users/**").permitAll()  // Öffentliche Endpunkte
-                        .anyRequest().authenticated()  // Alle anderen Endpunkte erfordern Authentifizierung
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**", "/api/users/**",  "/uploads/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**", "/api/auth/**")
                 )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))  // für H2-Konsole
                 .formLogin(form -> form.disable()) // Form Login deaktivieren

@@ -16,8 +16,18 @@ public class RegistrationRequest {
         private Date birthDate;
         private RoleEnum role;
         private String profilePicture;
+        private VehicleClassEnum vehicleClass;
 
-        public void setProfilePicture(String profilePicture) {
+
+    public VehicleClassEnum getVehicleClass() {
+        return vehicleClass;
+    }
+
+    public void setVehicleClass(VehicleClassEnum vehicleClass) {
+        this.vehicleClass = vehicleClass;
+    }
+
+    public void setProfilePicture(String profilePicture) {
                 this.profilePicture = profilePicture;
         }
 

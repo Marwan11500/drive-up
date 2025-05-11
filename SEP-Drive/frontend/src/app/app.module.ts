@@ -24,10 +24,13 @@ import {
 } from '@angular/material/datepicker';
 import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 
 @NgModule({
   declarations: [
+    AppComponent,
+    ProfilePageComponent
     AppComponent,
     RegisterComponent,
     TwoFactorComponent
