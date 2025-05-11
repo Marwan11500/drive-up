@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,13 +15,26 @@ export class NavbarComponent implements OnInit {
   username: string = '';
   photoUrl: string = '';
 
-  constructor(private readonly dialogue: MatDialog) {}
+  constructor(
+    private readonly dialogue: MatDialog,
+    private readonly router: Router,
+    ) {}
 
   ngOnInit(): void {
-        this.isLoggedIn = true;
-        this.username = 'Ziad Morsy';
-        this.photoUrl = 'assets/placeholder.png';
+    // Check if the username is stored in localStorage
+    const storedUser = localStorage.getItem('loggedInUser');
+
+    if (storedUser) {
+      // If there is a user logged in, display the information
+      this.isLoggedIn = true;
+      this.username = storedUser;
+      this.photoUrl = 'assets/placeholder.png';
+    } else {
+      // If no user is logged in, don't show it
+      this.isLoggedIn = false;
     }
+  }
+
 
   openLoginDialog() {
     const dialogRef = this.dialogue.open(LoginDialogComponent, {
@@ -32,5 +46,10 @@ export class NavbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  goToProfile() {
+    console.log('going to profile');
+    this.router.navigate([`/${this.username}`]);
   }
 }

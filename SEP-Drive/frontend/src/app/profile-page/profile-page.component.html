@@ -1,39 +1,27 @@
-<div class="profile-page">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <img ngSrc="assets/placeholder.png" alt="UserPic" class="profile-photo" height="8000" width="8000"/>
-    <nav>
-      <ul>
-        <li [class.active]="selectedSection === 'account'" (click)="selectSection('account')">Account</li>
-        <li [class.active]="selectedSection === 'security'" (click)="selectSection('security')">Security</li>
-        <li [class.active]="selectedSection === 'rides'" (click)="selectSection('rides')">Rides</li>
-        <li [class.active]="selectedSection === 'settings'" (click)="selectSection('settings')">Settings</li>
-      </ul>
-    </nav>
-  </div>
+<div class="profile-container">
+    <img
+            ngSrc="{{ profileData?.profilePicture ? profileData.profilePicture : 'assets/placeholder.png' }}"
+            alt="UserPic"
+            class="profile-photo"
+            height="200"
+            width="200"
+    />
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <ng-container [ngSwitch]="selectedSection">
-      <div *ngSwitchCase="'account'">
-        <h2>Account Information</h2>
-        <p>Details about your account...</p>
-      </div>
-      <div *ngSwitchCase="'security'">
-        <h2>Security Settings</h2>
-        <p>Manage your password, two-factor authentication...</p>
-      </div>
-      <div *ngSwitchCase="'rides'">
-        <h2>Your Rides</h2>
-        <p>All your rides will be listed here...</p>
-      </div>
-      <div *ngSwitchCase="'settings'">
-        <h2>Settings</h2>
-        <p>General settings...</p>
-      </div>
-      <div *ngSwitchDefault>
-        <h2>Select a section</h2>
-      </div>
-    </ng-container>
-  </div>
+    <div class="profile-info">
+        <h2>{{ profileData?.username }}</h2>
+        <h3 *ngIf="profileData?.role">{{ profileData.role }}</h3>
+
+        <div class="profile-details">
+            <p><strong>First Name:</strong> {{ profileData?.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ profileData?.lastName }}</p>
+            <p><strong>Email:</strong> {{ profileData?.email }}</p>
+            <p><strong>Birthdate:</strong> {{ profileData?.birthDate | date: 'dd-MM-yyyy' }}</p>
+            <p><strong>Total Rides:</strong> {{ profileData?.totalRides }}</p>
+            <p><strong>Rating:</strong> ⭐⭐⭐⭐✰</p>
+
+            <p *ngIf="profileData?.role === 'Fahrer'">
+                <strong>Car Class:</strong> {{ profileData?.vehicleClass }}
+            </p>
+        </div>
+    </div>
 </div>

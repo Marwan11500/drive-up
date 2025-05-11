@@ -13,7 +13,7 @@
   </button>
 
   <!-- If the user is logged in, show the username and photo -->
-  <div *ngIf="isLoggedIn" class="user-info">
+  <div *ngIf="isLoggedIn" class="user-info" (click)="goToProfile()">
     <img
       ngSrc="{{ photoUrl }}"
       alt="UserPic"
@@ -22,6 +22,6 @@
       height="35"
       fetchpriority="auto"
     />
-    <span>{{ username }}</span>
+    <span class="username">{{ username }}</span>
   </div>
 </mat-toolbar>
