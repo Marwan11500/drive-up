@@ -2,6 +2,19 @@
   <span class="navbar-title">SEP-Drive</span>
   <span class="spacer"></span>
 
+  <!-- 🔎 Search Bar -->
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      placeholder="Search Username"
+      [formControl]="usernameControl"
+      (keydown.enter)="searchUser(usernameControl.value)"
+    />
+    <button class="search-button" (click)="searchUser(usernameControl.value)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
   <!-- If the user is not logged in, show the login button -->
   <button
     *ngIf="!isLoggedIn"
