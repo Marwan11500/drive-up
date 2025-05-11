@@ -7,8 +7,13 @@
 .navbar-title {
   font-size: 1.8rem;
   font-weight: 650;
-  color: #ffffff;
+  color: #ffffff !important;
   font-family: 'Roboto Light', sans-serif;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  text-transform: none;
 }
 
 .spacer {

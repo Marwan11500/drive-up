@@ -67,4 +67,10 @@ export class NavbarComponent implements OnInit {
     console.log('going to profile');
     this.router.navigate([`/${(this.username)}`]);
   }
+
+  goHome() {
+    console.log('going home');
+    this.router.navigate(['/']);
+  }
+
 }
