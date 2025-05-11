@@ -8,7 +8,7 @@
   <br>
   <mat-form-field appearance="fill" class="car-select">
     <mat-label>Choose a car</mat-label>
-    <mat-select [formControl]="CarControl">
+    <mat-select [(ngModel)]="vehicleclass" [formControl]="CarControl">
       <mat-option value="Small">Small</mat-option>
       <mat-option value="Medium">Medium</mat-option>
       <mat-option value="Large">Large</mat-option>
