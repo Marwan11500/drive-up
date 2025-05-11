@@ -1,14 +1,14 @@
 <form class="example-form" (ngSubmit)="onRegister()">
   <h1>Register</h1>
-<br>
+  <br>
   <mat-radio-group [(ngModel)]="role" [formControl]="RoleControl" aria-label="Select a role"  name="role">
     <mat-radio-button value="Driver">Driver</mat-radio-button>
     <mat-radio-button value="Customer">Customer</mat-radio-button>
   </mat-radio-group>
   <br>
   <mat-form-field appearance="fill" class="car-select">
-    <mat-label>Choose a car</mat-label>
-    <mat-select [(ngModel)]="vehicleclass" [formControl]="CarControl">
+    <mat-label>Choose a vehicleClass</mat-label>
+    <mat-select [(ngModel)]="vehicleClass" [formControl]="CarControl">
       <mat-option value="Small">Small</mat-option>
       <mat-option value="Medium">Medium</mat-option>
       <mat-option value="Large">Large</mat-option>

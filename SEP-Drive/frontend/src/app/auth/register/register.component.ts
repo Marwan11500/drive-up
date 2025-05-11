@@ -16,7 +16,7 @@ export class RegisterComponent {
   password: string = '';
   role: string = '';
   birthDate: Date | null = null;
-  vehicleclass : string = '';
+  vehicleClass : string = '';
   RoleControl = new FormControl('');
   CarControl = new FormControl({ value: '', disabled: true });
 
@@ -48,7 +48,7 @@ export class RegisterComponent {
       password: this.password,
       role: this.role,
       birthDate: this.birthDate,
-      VehicleClass: this.vehicleclass
+      vehicleClass: this.vehicleClass
     };
 
     this.usersService.createUser(userData).subscribe({
