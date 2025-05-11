@@ -1,6 +1,7 @@
 package com.example.sep_drive_backend.controller;
 
 import com.example.sep_drive_backend.dto.RegistrationRequest;
+import com.example.sep_drive_backend.repository.CustomerRepository;
 import com.example.sep_drive_backend.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
