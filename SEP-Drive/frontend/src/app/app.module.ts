@@ -30,7 +30,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
     AppComponent,
     RegisterComponent,
     TwoFactorComponent
