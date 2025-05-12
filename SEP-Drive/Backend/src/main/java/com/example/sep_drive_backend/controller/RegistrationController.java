@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 @RequestMapping("/api/auth")
 public class RegistrationController {
 
@@ -30,11 +31,11 @@ public class RegistrationController {
             @RequestParam("email") String email,
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
-            @RequestParam("birthDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date birthDate,
+            @RequestParam("birthDate") @DateTimeFormat(pattern = "MM/dd/yyyy") Date birthDate,
             @RequestParam("role") RoleEnum role,
             @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
             @RequestParam(value = "vehicleClass", required = false) VehicleClassEnum vehicleClass) {
-
+        System.out.println("Received Vehicle Class: " + vehicleClass);
         registrationService.registerUser(username, password, email, firstName, lastName, birthDate, role, profilePicture, vehicleClass);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");

@@ -8,7 +8,7 @@
   <br>
   <mat-form-field appearance="fill" class="car-select">
     <mat-label>Choose a vehicleClass</mat-label>
-    <mat-select [(ngModel)]="vehicleClass" [formControl]="CarControl">
+    <mat-select  [(ngModel)]="vehicleClass" [formControl]="CarControl">
       <mat-option value="Small">Small</mat-option>
       <mat-option value="Medium">Medium</mat-option>
       <mat-option value="Large">Large</mat-option>
@@ -41,7 +41,7 @@
   <br>
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password">
+    <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" required name="password">
     <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'" [attr.aria-pressed]="hidePassword">
       <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
@@ -49,10 +49,16 @@
   <br>
   <mat-form-field appearance="fill">
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="birthDate" name="date">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="birthDate" name="date" required>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <br>
+  <div class="file-upload">
+    <mat-label>Choose a ProfilePicture (optional)</mat-label>
+    <button mat-raised-button color="primary" (click)="fileInput.click()">Datei auswählen</button>
+    <input #fileInput type="file" hidden (change)="onFileSelected($event)" />
+  </div>
   <br>
   <div class="register-button-container">
     <button mat-raised-button color="primary" type="submit" >Registrieren</button>
