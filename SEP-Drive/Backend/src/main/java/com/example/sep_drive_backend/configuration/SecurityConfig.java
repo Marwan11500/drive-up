@@ -24,11 +24,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**", "/api/users/**", "/uploads/**").permitAll()
+                        .requestMatchers("/", "/home", "/h2-console/**", "/api/auth/**", "/api/users/**", "/uploads/**", "/api/ride-requests/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**", "/api/auth/**")
+                        .ignoringRequestMatchers("/h2-console/**", "/api/auth/**", "/api/ride-requests/**")
                 )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))  // für H2-Konsole
                 .formLogin(form -> form.disable()) // Form Login deaktivieren

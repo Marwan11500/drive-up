@@ -9,12 +9,21 @@ import java.util.Date;
 @Entity
 public class Customer extends users {
 
+    private boolean active;
 
     public Customer() {}
 
     public Customer(String username, String firstName, String lastName, String email ,Date birthDate, String password, RoleEnum role, String profilePicture) {
         super(username, firstName, lastName, email, birthDate, password, role, profilePicture);
+        active = false;
 
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
