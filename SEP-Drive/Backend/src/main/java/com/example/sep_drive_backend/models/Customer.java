@@ -11,7 +11,7 @@ import java.util.Date;
 public class Customer extends users {
     private float rating = 0;
     private int totalRides = 0;
-
+// yehia test
     private boolean active;
 
     public Customer() {
