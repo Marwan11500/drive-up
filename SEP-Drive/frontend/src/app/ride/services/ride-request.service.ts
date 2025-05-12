@@ -20,4 +20,8 @@ export class RideRequestService {
   public getRide(username: string) {
     return this.http.get<Ride>(this.baseUrl + '/' + username)
   }
+
+  public deactivateRide(username: string) {
+    return this.http.delete<Ride>(this.baseUrl + '/' + username)
+  }
 }

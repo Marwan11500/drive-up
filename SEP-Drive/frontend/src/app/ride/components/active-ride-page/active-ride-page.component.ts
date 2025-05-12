@@ -21,10 +21,16 @@ export class ActiveRidePageComponent implements OnInit {
   }
 
 
-  //todo add deactivation logic
   deactivateRide() {
-    this.router.navigate(['/ride/request']);
-    console.log("deactivated");
+    // TODO UPDATE USERNAME DYNAMICALLY
+    this.rideService.deactivateRide('john').subscribe({
+      next: () => {
+        this.router.navigate(['/ride/request']);
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   ngOnInit() {
