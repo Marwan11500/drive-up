@@ -21,7 +21,7 @@ export class ActiveRidePageComponent {
     stopovers: [{name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542},
       {name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542},
       {name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542}],
-    vehicleClass: VehicleClass.klein,
+    vehicleClass: VehicleClass.SMALL,
     active: true
   }
 

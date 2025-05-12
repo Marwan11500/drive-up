@@ -10,6 +10,7 @@ import {FormArray, FormControl, Validators} from '@angular/forms';
 import {catchError, debounceTime, distinctUntilChanged, Observable, of, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {RideRequestService} from '../../services/ride-request.service';
 
 enum updateType {
   pickup = -2,
@@ -28,7 +29,7 @@ export class RideFormComponent implements OnInit {
     pickup: {latitude: 0, longitude: 0},
     dropoff: {latitude: 0, longitude: 0},
     stopovers: [],
-    vehicleClass: VehicleClass.klein,
+    vehicleClass: VehicleClass.SMALL,
     active: false
   };
 
@@ -44,6 +45,7 @@ export class RideFormComponent implements OnInit {
   constructor(
     private geolocationService: GeolocationService,
     private placesService: PlacesService,
+    private rideService: RideRequestService,
     private router: Router,
   ) {
   }
@@ -150,10 +152,35 @@ export class RideFormComponent implements OnInit {
     );
   }
 
-  //TODO: Validation logic and Submtit logic
   submit() {
-    console.log('done');
-    this.ride.active = true;
-    this.router.navigate(['/ride/active']);
+
+    const rideDataJson: any = {
+      userName: 'john',
+      vehicleClass: this.ride.vehicleClass,
+      startLatitude: `${this.ride.pickup.latitude}`,
+      startLongitude: `${this.ride.pickup.longitude}`,
+      destinationLatitude: `${this.ride.dropoff.latitude}`,
+      destinationLongitude: `${this.ride.pickup.longitude}`,
+    };
+
+    if (this.ride.pickup.address) {
+      rideDataJson.startAddress = this.ride.pickup.address;
+    }
+
+    if (this.ride.dropoff.address) {
+      rideDataJson.destinationAddress = this.ride.dropoff.address;
+    }
+
+    console.log(rideDataJson)
+
+    this.rideService.submitRide(rideDataJson).subscribe({
+      next: response => {
+        console.log('Submitted:', response);
+        this.router.navigate(['/ride/active']);
+      },
+      error: error => {
+        console.error('Error:', error);
+      }
+    });
   }
 }

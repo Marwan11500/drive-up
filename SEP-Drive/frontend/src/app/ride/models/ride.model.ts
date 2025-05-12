@@ -9,7 +9,7 @@ export interface Ride {
 }
 
 export enum VehicleClass {
-  klein = 'Klein',
-  mittel = 'Mittel',
-  deluxe = 'Deluxe'
+  SMALL = 'Small',
+  MEDIUM = 'Medium',
+  LARGE = 'Large'
 }

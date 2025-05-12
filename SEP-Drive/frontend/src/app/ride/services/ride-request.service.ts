@@ -10,11 +10,11 @@ export class RideRequestService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'http://localhost:8080'; //TODO FIND URL
+    this.baseUrl = 'http://localhost:8080/api/ride-requests';
   }
 
-  public submitRide(ride: Ride) {
-    return this.http.post<Ride>(this.baseUrl, ride) // TODO this.baseUrl + '/xxx' possible
+  public submitRide(ride: any) {
+    return this.http.post<Ride>(this.baseUrl, ride)
   }
 
 
