@@ -7,7 +7,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { RideModule } from './ride/ride.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
-import { TwoFactorComponent } from './auth/two-factor/two-factor.component';
+import {TwoFaComponent} from  './shared/components/two-fa/two-fa.component';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,7 @@ import {
 import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     ProfilePageComponent,
     AppComponent,
     RegisterComponent,
-    TwoFactorComponent
+    TwoFaComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +65,10 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     MatDatepickerModule,
     MatButton,
     MatOption,
-    MatSelect
+    MatSelect,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle
   ],
 
   providers: [

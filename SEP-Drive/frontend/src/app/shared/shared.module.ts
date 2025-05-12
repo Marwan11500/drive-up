@@ -7,7 +7,7 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
-import { TwoFaComponent } from './components/two-fa/two-fa.component';
+
 import {FormsModule} from '@angular/forms';
 import { MatInput} from '@angular/material/input';
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
@@ -23,8 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonComponent,
     InputComponent,
     NavbarComponent,
-    LoginDialogComponent,
-    TwoFaComponent
+    LoginDialogComponent
   ],
   imports: [
     CommonModule,

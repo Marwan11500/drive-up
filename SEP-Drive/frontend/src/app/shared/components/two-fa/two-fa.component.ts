@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import {AuthService} from '../../../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-two-fa',
@@ -14,7 +15,8 @@ export class TwoFaComponent {
 
   constructor(
     private dialogRef: MatDialogRef<TwoFaComponent>,
-    private authService: AuthService // Hier den AuthService importieren
+    private authService: AuthService, // Hier den AuthService importieren
+    private router: Router
   ) {}
 
   verifyCode() {
@@ -36,6 +38,7 @@ export class TwoFaComponent {
         localStorage.setItem('token', response); // Store JWT for future requests
         this.dialogRef.close(); // Close the dialog
         window.location.href="/";
+        this.router.navigate(['/profile']);
       },
       error: (err) => {
         console.error('❌ Verification failed:', err);
