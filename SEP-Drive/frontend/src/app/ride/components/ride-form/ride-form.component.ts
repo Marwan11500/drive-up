@@ -155,7 +155,7 @@ export class RideFormComponent implements OnInit {
   submit() {
 
     const rideDataJson: any = {
-      userName: 'john',
+      userName: 'john', // TODO fetch username dynamically
       vehicleClass: this.ride.vehicleClass,
       startLatitude: `${this.ride.pickup.latitude}`,
       startLongitude: `${this.ride.pickup.longitude}`,
