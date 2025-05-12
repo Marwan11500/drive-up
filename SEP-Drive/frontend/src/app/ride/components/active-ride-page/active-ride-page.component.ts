@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ride, VehicleClass} from '../../models/ride.model';
+import {Location} from '../../models/location.model'
 import {Router} from '@angular/router';
+import {RideRequestService} from '../../services/ride-request.service';
 
 @Component({
   selector: 'app-active-ride-page',
@@ -9,25 +11,57 @@ import {Router} from '@angular/router';
   styleUrl: './active-ride-page.component.scss'
 
 })
-export class ActiveRidePageComponent {
+export class ActiveRidePageComponent implements OnInit {
 
-  constructor(private router: Router) {
+  activeRide!: Ride;
+
+  constructor(
+    private rideService: RideRequestService,
+    private router: Router) {
   }
 
-  //TODO FETCH RIDE
-  mockupride: Ride = {
-    pickup: {name: "PICK ME UP", address: "123456 Essen", latitude: 123456, longitude: 9876542},
-    dropoff: {name: "DROP ME OFF", address: "123456 Essen", latitude: 123456, longitude: 9876542},
-    stopovers: [{name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542},
-      {name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542},
-      {name: "STOP BY", address: "123456 Essen", latitude: 123456, longitude: 9876542}],
-    vehicleClass: VehicleClass.SMALL,
-    active: true
-  }
 
   //todo add deactivation logic
   deactivateRide() {
     this.router.navigate(['/ride/request']);
     console.log("deactivated");
+  }
+
+  ngOnInit() {
+    // TODO UPDATE USERNAME DYNAMICALLY
+    this.rideService.getRide('john').subscribe({
+        next: response => {
+          this.activeRide = this.mapToRide(response);
+          console.log('myride', this.activeRide);
+        },
+        error: err => console.log('myerror', err)
+      }
+    )
+  }
+
+  private mapToRide(raw: any): Ride {
+    const pickup: Location = {
+      // name: 'raw.name
+      latitude: Number(raw.startLatitude),
+      longitude: Number(raw.startLongitude),
+      address: raw.startAddress || undefined,
+    };
+
+    const dropoff: Location = {
+      // name: 'raw.name
+      latitude: Number(raw.destinationLatitude),
+      longitude: Number(raw.destinationLongitude),
+      address: raw.destinationAddress || undefined,
+    };
+
+    const ride: Ride = {
+      pickup,
+      dropoff,
+      stopovers: [], // TODO UPDATE WITH STOPOVERS WHEN AVAILABLE
+      vehicleClass: raw.vehicleClass as VehicleClass,
+      active: true
+    };
+
+    return ride;
   }
 }

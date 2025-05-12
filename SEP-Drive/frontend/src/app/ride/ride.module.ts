@@ -20,7 +20,7 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {LocationAutocompleteComponent} from './components/location-autocomplete/location-autocomplete.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {ActiveRidePageComponent} from './components/active-ride-page/active-ride-page.component';
-import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {LocationCardComponent} from './components/location-card/location-card.component';
 
 @NgModule({
@@ -48,7 +48,8 @@ import {LocationCardComponent} from './components/location-card/location-card.co
     MatFabButton,
     MatRadioModule,
     MatCard,
-    MatCardContent
+    MatCardContent,
+    MatCardTitle
   ],
   providers: [
     GeolocationService,

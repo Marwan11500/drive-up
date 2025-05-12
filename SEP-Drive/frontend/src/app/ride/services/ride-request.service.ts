@@ -17,5 +17,7 @@ export class RideRequestService {
     return this.http.post<Ride>(this.baseUrl, ride)
   }
 
-
+  public getRide(username: string) {
+    return this.http.get<Ride>(this.baseUrl + '/' + username)
+  }
 }
