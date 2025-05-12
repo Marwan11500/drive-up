@@ -13,6 +13,7 @@ public class EmailService {
     }
 
     public void sendVerificationCode(String to, String code) {
+        System.out.println("Sending verification code ");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject("Your Login Verification Code");

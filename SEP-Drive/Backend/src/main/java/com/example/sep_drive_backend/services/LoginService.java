@@ -36,20 +36,53 @@ public class LoginService {
     }
 
     public String loginUser(LoginRequest loginRequest) {
+
+        System.out.println("=== Login Debugging ===");
+        System.out.println("Username from Request: " + loginRequest.getUsername());
+        System.out.println("Password from Request: " + loginRequest.getPassword());
+
+        // === Attempt to find as a Customer
         Optional<Customer> customer = customerRepository.findByUsername(loginRequest.getUsername());
-        if (customer.isPresent() && passwordEncoder.matches(loginRequest.getPassword(), customer.get().getPassword())) {
-            sendVerificationCode(customer.get().getEmail(), customer.get().getUsername());
-            return "Email verification required. Check your inbox.";
+        if (customer.isPresent()) {
+            System.out.println("✅ Customer found: " + customer.get().getUsername());
+            System.out.println("🔒 Password in DB: " + customer.get().getPassword());
+            boolean match = passwordEncoder.matches(loginRequest.getPassword(), customer.get().getPassword());
+            System.out.println("🔍 Password Match Result: " + match);
+
+            if (match) {
+                sendVerificationCode(customer.get().getEmail(), customer.get().getUsername());
+                System.out.println("📧 Verification code sent to: " + customer.get().getEmail());
+                return "Email verification required. Check your inbox.";
+            } else {
+                System.out.println("❌ Password did not match for Customer.");
+            }
+        } else {
+            System.out.println("❌ No Customer found with username: " + loginRequest.getUsername());
         }
 
+        // === Attempt to find as a Driver
         Optional<Driver> driver = driverRepository.findByUsername(loginRequest.getUsername());
-        if (driver.isPresent() && passwordEncoder.matches(loginRequest.getPassword(), driver.get().getPassword())) {
-            sendVerificationCode(driver.get().getEmail(), driver.get().getUsername());
-            return "Email verification required. Check your inbox.";
+        if (driver.isPresent()) {
+            System.out.println("✅ Driver found: " + driver.get().getUsername());
+            System.out.println("🔒 Password in DB: " + driver.get().getPassword());
+            boolean match = passwordEncoder.matches(loginRequest.getPassword(), driver.get().getPassword());
+            System.out.println("🔍 Password Match Result: " + match);
+
+            if (match) {
+                sendVerificationCode(driver.get().getEmail(), driver.get().getUsername());
+                System.out.println("📧 Verification code sent to: " + driver.get().getEmail());
+                return "Email verification required. Check your inbox.";
+            } else {
+                System.out.println("❌ Password did not match for Driver.");
+            }
+        } else {
+            System.out.println("❌ No Driver found with username: " + loginRequest.getUsername());
         }
 
+        System.out.println("=== End of Login Debugging ===");
         return "Invalid username or password";
     }
+
 
     // Modified method: return token if verified
     public String verifyCodeAndGetToken(String username, String code) {

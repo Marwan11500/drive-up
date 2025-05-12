@@ -6,15 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.apiUrl = 'http://localhost:8080/api/auth/register';
+  }
 
-  private apiUrl = 'http://localhost:8080/api/auth/register';
 
-  createUser(user: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.post(this.apiUrl, user, { headers, withCredentials: true });
+  createUser(user: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, user, { withCredentials: true });
   }
 }

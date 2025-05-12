@@ -1,13 +1,21 @@
 package com.example.sep_drive_backend.services;
 
 import com.example.sep_drive_backend.constants.RoleEnum;
-import com.example.sep_drive_backend.dto.RegistrationRequest;
+import com.example.sep_drive_backend.constants.VehicleClassEnum;
 import com.example.sep_drive_backend.models.Customer;
 import com.example.sep_drive_backend.models.Driver;
 import com.example.sep_drive_backend.repository.CustomerRepository;
 import com.example.sep_drive_backend.repository.DriverRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
+
 
 @Service
 public class RegistrationService {
@@ -22,31 +30,32 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(RegistrationRequest request) {
-        if (request.getRole() == RoleEnum.Customer) {
-            Customer customer = new Customer();
-            customer.setRole(request.getRole());
-            customer.setUsername(request.getUsername());
-            customer.setPassword(passwordEncoder.encode(request.getPassword())); // Hash here
-            customer.setEmail(request.getEmail());
-            customer.setBirthDate(request.getBirthDate());
-            customer.setFirstName(request.getFirstName());
-            customer.setLastName(request.getLastName());
-            customer.setProfilePicture(request.getProfilePicture());
+    public void registerUser(String username, String password, String email, String firstName, String lastName,
+                             Date birthDate, RoleEnum role, MultipartFile profilePicture, VehicleClassEnum vehicleClass) {
+
+        String fileName = null;
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            try {
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                fileName = System.currentTimeMillis() + "_" + profilePicture.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+                Files.createDirectories(filePath.getParent());
+                profilePicture.transferTo(filePath.toFile());
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to store profile picture", e);
+            }
+        }
+
+        if (role == RoleEnum.Customer) {
+            Customer customer = new Customer(username, firstName, lastName, email, birthDate,
+                    passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null);
             customerRepository.save(customer);
 
-        } else if (request.getRole() == RoleEnum.Driver) {
-            Driver driver = new Driver();
-            driver.setRole(request.getRole());
-            driver.setUsername(request.getUsername());
-            driver.setPassword(passwordEncoder.encode(request.getPassword())); // Hash here
-            driver.setEmail(request.getEmail());
-            driver.setBirthDate(request.getBirthDate());
-            driver.setFirstName(request.getFirstName());
-            driver.setLastName(request.getLastName());
-            driver.setProfilePicture(request.getProfilePicture());
+        } else if (role == RoleEnum.Driver) {
+            Driver driver = new Driver(username, firstName, lastName, email, birthDate,
+                    passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null, vehicleClass);
             driverRepository.save(driver);
         }
     }
-
 }
