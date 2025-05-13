@@ -22,8 +22,11 @@ export class ActiveRidePageComponent implements OnInit {
 
 
   deactivateRide() {
-    // TODO UPDATE USERNAME DYNAMICALLY
-    this.rideService.deactivateRide('john').subscribe({
+
+    const user = JSON.parse(<string>localStorage.getItem('currentUser'));
+    const username = user?.username;
+
+    this.rideService.deactivateRide(username).subscribe({
       next: () => {
         this.router.navigate(['/ride/request']);
       },
@@ -34,8 +37,11 @@ export class ActiveRidePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO UPDATE USERNAME DYNAMICALLY
-    this.rideService.getRide('john').subscribe({
+
+    const user = JSON.parse(<string>localStorage.getItem('currentUser'));
+    const username = user?.username;
+
+    this.rideService.getRide(username).subscribe({
         next: response => {
           this.activeRide = this.mapToRide(response);
           console.log('myride', this.activeRide);
