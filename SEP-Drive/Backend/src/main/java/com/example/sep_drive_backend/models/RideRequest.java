@@ -30,6 +30,7 @@ public class RideRequest {
     public RideRequest() {}
     public RideRequest(Long id, String startAddress, String destinationAddress, VehicleClassEnum vehicleClass, Customer customer) {
         this.id = id;
+
         this.startAddress = startAddress;
         this.destinationAddress = destinationAddress;
         this.vehicleClass = vehicleClass;
@@ -41,6 +42,27 @@ public class RideRequest {
 
     private Double startLatitude;
     private Double startLongitude;
+
+    public String getStartLocationName() {
+        return startLocationName;
+    }
+
+    public void setStartLocationName(String startLocationName) {
+        this.startLocationName = startLocationName;
+    }
+
+    public String getDestinationLocationName() {
+        return DestinationLocationName;
+    }
+
+    public void setDestinationLocationName(String destinationLocationName) {
+        DestinationLocationName = destinationLocationName;
+    }
+
+    @Column (nullable = true)
+    private String startLocationName;
+    @Column (nullable = true)
+    private String DestinationLocationName;
 
     @Column
     private String destinationAddress;
