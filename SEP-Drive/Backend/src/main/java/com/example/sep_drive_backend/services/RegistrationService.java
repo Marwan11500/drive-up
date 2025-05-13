@@ -32,6 +32,13 @@ public class RegistrationService {
 
     public Object registerUser(String username, String password, String email, String firstName, String lastName,
                                Date birthDate, RoleEnum role, MultipartFile profilePicture, VehicleClassEnum vehicleClass) {
+        if (customerRepository.findByUsername(username).isPresent() || driverRepository.findByUsername(username).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
+        if (customerRepository.findByEmail(email).isPresent() || driverRepository.findByEmail(email).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
+        }
 
         String fileName = null;
 
@@ -52,8 +59,8 @@ public class RegistrationService {
             Customer customer = new Customer(username, firstName, lastName, email, birthDate,
                     passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null);
 
-            Customer savedCustomer = customerRepository.save(customer); // 🔍 Save and get the saved object
-            return savedCustomer;  // 🔍 Return the saved Customer
+            // 🔍 Save and get the saved object
+            return customerRepository.save(customer);  // 🔍 Return the saved Customer
         }
 
         // 📝 If the role is Driver, save it and return the object
@@ -61,8 +68,8 @@ public class RegistrationService {
             Driver driver = new Driver(username, firstName, lastName, email, birthDate,
                     passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null, vehicleClass);
 
-            Driver savedDriver = driverRepository.save(driver); // 🔍 Save and get the saved object
-            return savedDriver;  // 🔍 Return the saved Driver
+            // 🔍 Save and get the saved object
+            return driverRepository.save(driver);  // 🔍 Return the saved Driver
         }
 
         // If something goes wrong, return null
