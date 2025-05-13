@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {UsersService} from '../services/users.service';
 import { VehicleClass } from '../Constants/VehicleClassEnum';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: false,
@@ -20,16 +21,22 @@ export class RegisterComponent {
   vehicleClass: VehicleClass | null = null;
   RoleControl = new FormControl('');
   CarControl = new FormControl({ value: '', disabled: true });
+  alertMessage: string | null = null;
+  alertType: 'success' | 'error' | null = null;
   // 🔹 Passwort-Anzeige umschalten
   hidePassword = true;
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService
+  , private router: Router) {
     this.RoleControl.valueChanges.subscribe(role => {
       if (role === 'Driver') {
-        this.CarControl.enable(); // aktivieren
+        this.CarControl.enable();
+        this.CarControl.setValidators([Validators.required]);
       } else {
-        this.CarControl.disable();// deaktivieren
-        this.vehicleClass = null;
+        this.CarControl.disable();
+        this.CarControl.clearValidators();
+        this.vehicleClass = null;  // Fahrzeugklasse zurücksetzen
       }
+      this.CarControl.updateValueAndValidity();
     });
   }
   private formatDate(date: Date): string {
@@ -65,28 +72,31 @@ export class RegisterComponent {
     if (this.vehicleClass) {
       formData.append('vehicleClass', this.vehicleClass);
     }
+    if (this.role === 'Driver' && !this.vehicleClass) {
+      this.showAlert('Please select a vehicle class.', 'error');
+      return;
+    }
     if (this.profilePicture) {
       formData.append('profilePicture', this.profilePicture);
     }
 
     this.usersService.createUser(formData).subscribe({
-      next: (response) => {
-        console.log('✅ Registrierung erfolgreich:', response);
-
-        if (response) {
-          // ✅ Store in Local Storage
-          localStorage.setItem('currentUser', JSON.stringify(response));
-
-          // ✅ Navigate to the main page
-          window.location.href = '/';
-        } else {
-          console.warn("⚠️ Registration response is null or undefined!");
-        }
+      next: (response: any) => {
+        this.showAlert(response.message || 'Registration successful', 'success');
+        setTimeout(() => this.router.navigate(['/']), 2000);
       },
-      error: (error) => {
-        console.error('❌ Fehler bei der Registrierung:', error.message);
+      error: (err: any) => {
+        const msg = err.error?.message || err.error || 'The Email or Username is already in used.';
+        this.showAlert(`Registration failed: ${msg}`, 'error');
       }
     });
   }
-
+  private showAlert(message: string, type: 'success' | 'error'): void {
+      this.alertMessage = message;
+      this.alertType = type;
+      setTimeout(() => {
+      this.alertMessage = null;
+      this.alertType = null;
+    }, 5000);
+  }
 }

@@ -1,3 +1,37 @@
+.alert {
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.alert.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.alert.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+}
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+
+
 .mat-mdc-radio-button ~ .mat-mdc-radio-button {
   margin-left: 16px;
 }
