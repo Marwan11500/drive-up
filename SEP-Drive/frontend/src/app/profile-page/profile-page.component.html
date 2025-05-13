@@ -1,27 +1,33 @@
 <div class="profile-container">
-    <img
-            ngSrc="{{ profileData?.profilePicture ? profileData.profilePicture : 'assets/placeholder.png' }}"
-            alt="UserPic"
-            class="profile-photo"
-            height="200"
-            width="200"
-    />
+  <img
+    ngSrc="{{ profileData?.profilePicture ? profileData.profilePicture : 'assets/placeholder.png' }}"
+    alt="UserPic"
+    class="profile-photo"
+    height="200"
+    width="200"
+  />
 
-    <div class="profile-info">
-        <h2>{{ profileData?.username }}</h2>
-        <h3 *ngIf="profileData?.role">{{ profileData.role }}</h3>
+  <div class="profile-info">
+    <h2>{{ profileData?.username }}</h2>
+    <h3 *ngIf="profileData?.role">{{ profileData.role }}</h3>
 
-        <div class="profile-details">
-            <p><strong>First Name:</strong> {{ profileData?.firstName }}</p>
-            <p><strong>Last Name:</strong> {{ profileData?.lastName }}</p>
-            <p><strong>Email:</strong> {{ profileData?.email }}</p>
-            <p><strong>Birthdate:</strong> {{ profileData?.birthDate | date: 'dd-MM-yyyy' }}</p>
-            <p><strong>Total Rides:</strong> {{ profileData?.totalRides }}</p>
-            <p><strong>Rating:</strong> ⭐⭐⭐⭐✰</p>
+    <div class="profile-details">
+      <p><strong>First Name:</strong> {{ profileData?.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ profileData?.lastName }}</p>
+      <p><strong>Email:</strong> {{ profileData?.email }}</p>
+      <p><strong>Birthdate:</strong> {{ profileData?.birthDate | date: 'MM-dd-yyyy' }}</p>
+      <p><strong>Total Rides:</strong> {{ profileData?.totalRides }}</p>
+      <p><strong>Rating:</strong> ⭐⭐⭐⭐✰</p>
 
-            <p *ngIf="profileData?.role === 'Fahrer'">
-                <strong>Car Class:</strong> {{ profileData?.vehicleClass }}
-            </p>
-        </div>
+      <!-- 🔍 Vehicle Class only for Driver -->
+      <p *ngIf="profileData?.role === 'Driver'">
+        <strong>Vehicle Class:</strong> {{ profileData?.vehicleClass ? profileData.vehicleClass : 'Not specified' }}
+      </p>
     </div>
+  </div>
+
+  <button mat-raised-button color="warn" (click)="logout()" class="logout-button">
+    Logout
+  </button>
+
 </div>

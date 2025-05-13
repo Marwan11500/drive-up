@@ -30,8 +30,8 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(String username, String password, String email, String firstName, String lastName,
-                             Date birthDate, RoleEnum role, MultipartFile profilePicture, VehicleClassEnum vehicleClass) {
+    public Object registerUser(String username, String password, String email, String firstName, String lastName,
+                               Date birthDate, RoleEnum role, MultipartFile profilePicture, VehicleClassEnum vehicleClass) {
 
         String fileName = null;
 
@@ -47,15 +47,26 @@ public class RegistrationService {
             }
         }
 
+        // 📝 If the role is Customer, save it and return the object
         if (role == RoleEnum.Customer) {
             Customer customer = new Customer(username, firstName, lastName, email, birthDate,
                     passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null);
-            customerRepository.save(customer);
 
-        } else if (role == RoleEnum.Driver) {
+            Customer savedCustomer = customerRepository.save(customer); // 🔍 Save and get the saved object
+            return savedCustomer;  // 🔍 Return the saved Customer
+        }
+
+        // 📝 If the role is Driver, save it and return the object
+        else if (role == RoleEnum.Driver) {
             Driver driver = new Driver(username, firstName, lastName, email, birthDate,
                     passwordEncoder.encode(password), role, fileName != null ? "/uploads/" + fileName : null, vehicleClass);
-            driverRepository.save(driver);
+
+            Driver savedDriver = driverRepository.save(driver); // 🔍 Save and get the saved object
+            return savedDriver;  // 🔍 Return the saved Driver
         }
+
+        // If something goes wrong, return null
+        return null;
     }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from "../shared/services/profile.service";
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -14,7 +15,8 @@ export class ProfilePageComponent implements OnInit {
     constructor(
         private profileService: ProfileService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,16 @@ export class ProfilePageComponent implements OnInit {
         });
       }
     });
+  }
+
+  logout() {
+    console.log("🚪 Logging out from profile page...");
+
+    if (this.authService.clearUserData) {
+      this.authService.clearUserData();
+    } else {
+      console.error("❌ clearUserData not found in AuthService!");
+    }
   }
 
 }

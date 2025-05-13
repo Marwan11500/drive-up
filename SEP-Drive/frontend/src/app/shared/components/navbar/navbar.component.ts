@@ -4,7 +4,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,21 +24,21 @@ export class NavbarComponent implements OnInit {
   constructor(
     private readonly dialogue: MatDialog,
     private readonly router: Router,
+    private readonly authService: AuthService
     ) {}
 
   ngOnInit(): void {
-    // Check if the username is stored in localStorage
-    const storedUser = localStorage.getItem('loggedInUser');
-
-    if (storedUser) {
-      // If there is a user logged in, display the information
-      this.isLoggedIn = true;
-      this.username = storedUser;
-      this.photoUrl = 'assets/placeholder.png';
-    } else {
-      // If no user is logged in, don't show it
-      this.isLoggedIn = false;
-    }
+    this.authService.currentUser.subscribe((user) => {
+      if (user) {
+        this.isLoggedIn = true;
+        this.username = user.username ? user.username : 'No username';
+        this.photoUrl = user.photoUrl ? user.photoUrl : 'assets/placeholder.png';
+      } else {
+        this.isLoggedIn = false;
+        this.username = '';
+        this.photoUrl = '';
+      }
+    });
   }
 
   openLoginDialog() {

@@ -50,32 +50,43 @@ export class RegisterComponent {
 
 
   // 🔹 Registrierung absenden
-    onRegister(): void {
-      const formData = new FormData();
-      formData.append('username', this.username);
-      formData.append('firstName', this.firstName);
-      formData.append('lastName', this.lastName);
-      formData.append('email', this.email);
-      formData.append('password', this.password);
-      formData.append('role', this.role);
-      if (this.birthDate) {
-        const formattedDate = this.formatDate(this.birthDate);
-        formData.append('birthDate', formattedDate);
-      }
-      if (this.vehicleClass) {
-        formData.append('vehicleClass', this.vehicleClass);
-      }
+  onRegister(): void {
+    const formData = new FormData();
+    formData.append('username', this.username);
+    formData.append('firstName', this.firstName);
+    formData.append('lastName', this.lastName);
+    formData.append('email', this.email);
+    formData.append('password', this.password);
+    formData.append('role', this.role);
+    if (this.birthDate) {
+      const formattedDate = this.formatDate(this.birthDate);
+      formData.append('birthDate', formattedDate);
+    }
+    if (this.vehicleClass) {
+      formData.append('vehicleClass', this.vehicleClass);
+    }
     if (this.profilePicture) {
       formData.append('profilePicture', this.profilePicture);
     }
 
     this.usersService.createUser(formData).subscribe({
-      next: response => {
-        console.log('Registrierung erfolgreich:', response);
+      next: (response) => {
+        console.log('✅ Registrierung erfolgreich:', response);
+
+        if (response) {
+          // ✅ Store in Local Storage
+          localStorage.setItem('currentUser', JSON.stringify(response));
+
+          // ✅ Navigate to the main page
+          window.location.href = '/';
+        } else {
+          console.warn("⚠️ Registration response is null or undefined!");
+        }
       },
-      error: error => {
-        console.error('Fehler bei der Registrierung:', error);
+      error: (error) => {
+        console.error('❌ Fehler bei der Registrierung:', error.message);
       }
     });
   }
+
 }

@@ -3,6 +3,7 @@ package com.example.sep_drive_backend.controller;
 import com.example.sep_drive_backend.constants.RoleEnum;
 import com.example.sep_drive_backend.constants.VehicleClassEnum;
 import com.example.sep_drive_backend.services.RegistrationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,26 @@ public class RegistrationController {
             @RequestParam("role") RoleEnum role,
             @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
             @RequestParam(value = "vehicleClass", required = false) VehicleClassEnum vehicleClass) {
-        System.out.println("Received Vehicle Class: " + vehicleClass);
-        registrationService.registerUser(username, password, email, firstName, lastName, birthDate, role, profilePicture, vehicleClass);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        System.out.println("Received Vehicle Class: " + vehicleClass);
+
+        // ✅ Register the user and get the saved object
+        Object savedUser = registrationService.registerUser(username, password, email, firstName, lastName, birthDate, role, profilePicture, vehicleClass);
+
+        if (savedUser != null) {
+            // ✅ Manually convert the user to JSON
+            String json;
+            try {
+                json = new ObjectMapper().writeValueAsString(savedUser); // 🔍 Convert to JSON
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to serialize user");
+            }
+
+            // ✅ Return the JSON string
+            return ResponseEntity.status(HttpStatus.CREATED).body(json);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user");
+        }
     }
+
 }

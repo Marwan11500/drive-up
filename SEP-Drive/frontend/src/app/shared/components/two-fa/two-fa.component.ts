@@ -1,29 +1,33 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import {AuthService} from '../../../auth/auth.service';
-import {Router} from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from '../../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-two-fa',
   standalone: false,
   templateUrl: './two-fa.component.html',
-  styleUrl: './two-fa.component.scss'
+  styleUrls: ['./two-fa.component.scss']
 })
 export class TwoFaComponent {
   verificationCode: string = '';
   errorMessage: string = '';
+  username: string;
 
   constructor(
     private dialogRef: MatDialogRef<TwoFaComponent>,
-    private authService: AuthService, // Hier den AuthService importieren
-    private router: Router
-  ) {}
+    private authService: AuthService,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.username = data.username;
+    console.log("✅ Received Username in 2FA Dialog:", this.username);
+  }
 
   verifyCode() {
     console.log('Entered Code:', this.verificationCode);
 
-    // 🔍 Retrieve the username (you can get it from localStorage or pass it via Dialog Data)
-    const username = localStorage.getItem('loggedInUser');
+    const username = this.username;
 
     if (!username) {
       this.errorMessage = "User not found. Please log in again.";
@@ -34,11 +38,27 @@ export class TwoFaComponent {
     this.authService.verifyCode(username, this.verificationCode).subscribe({
       next: (response) => {
         console.log('✅ Verification successful:', response);
-        alert('Login Successful!');
-        localStorage.setItem('token', response); // Store JWT for future requests
-        this.dialogRef.close(); // Close the dialog
-        window.location.href="/";
-        this.router.navigate(['/profile']);
+
+        // ✅ Store the token separately
+        localStorage.setItem('authToken', response.token);
+
+        // ✅ Fetch the user info from backend
+        this.authService.getUserInfo(username).subscribe({
+          next: (user) => {
+            console.log("✅ User Info Fetched:", user);
+
+            // ✅ Store user info in Local Storage
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.authService.storeUserData(user);
+
+            // ✅ Close dialog and redirect
+            this.dialogRef.close();
+            window.location.href = "/";
+          },
+          error: (err) => {
+            console.error("❌ Failed to fetch user info:", err.message);
+          }
+        });
       },
       error: (err) => {
         console.error('❌ Verification failed:', err);
@@ -46,4 +66,5 @@ export class TwoFaComponent {
       }
     });
   }
+
 }
