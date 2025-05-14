@@ -30,7 +30,21 @@
   margin-bottom: 1rem;
 }
 
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
 
+.file-upload .mat-icon-button.warn {
+  color: #f44336;
+}
+
+.file-upload span {
+  font-size: 0.875rem;
+  color: #333;
+}
 
 .mat-mdc-radio-button ~ .mat-mdc-radio-button {
   margin-left: 16px;

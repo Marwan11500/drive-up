@@ -18,6 +18,7 @@ export class RegisterComponent {
   password: string = '';
   birthDate: Date | null = null;
   profilePicture : File | null = null;
+  profilePictureName: string = '';
   vehicleClass: VehicleClass | null = null;
   RoleControl = new FormControl('');
   CarControl = new FormControl({ value: '', disabled: true });
@@ -45,16 +46,32 @@ export class RegisterComponent {
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
   }
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;
-  }
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.profilePicture = file;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fileType = file.type.toLowerCase();
+
+      // Prüfen, ob der Dateityp JPEG/JPG ist
+      if (fileType === 'image/jpeg' || fileType === 'image/jpg') {
+        this.profilePicture = file;
+        this.profilePictureName = file.name;
+        this.alertMessage = '';  // Fehlernachricht zurücksetzen
+      } else {
+        this.showAlert('Only JPEG/JPG files are allowed.', 'error');
+        this.removeFile(); // Datei zurücksetzen
+      }
     }
   }
 
+  removeFile(): void {
+    this.profilePicture = null;
+    this.profilePictureName = '';
+  }
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
 
   // 🔹 Registrierung absenden
   onRegister(): void {
@@ -91,12 +108,13 @@ export class RegisterComponent {
       }
     });
   }
-  private showAlert(message: string, type: 'success' | 'error'): void {
-      this.alertMessage = message;
-      this.alertType = type;
-      setTimeout(() => {
-      this.alertMessage = null;
+  showAlert(message: string, type: 'success' | 'error'): void {
+    this.alertMessage = message;
+    this.alertType = type;
+
+    setTimeout(() => {
+      this.alertMessage = '';
       this.alertType = null;
-    }, 5000);
+    }, 3000);
   }
 }

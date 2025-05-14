@@ -97,7 +97,7 @@
             [(ngModel)]="password"
             required
             #p="ngModel">
-          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" tabindex="-1">
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()" tabindex="-1">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           <mat-error *ngIf="p.invalid && (p.dirty || p.touched)">Password is required</mat-error>
@@ -119,9 +119,22 @@
         </mat-form-field>
 
 
-        <div class="full-width file-upload">
-          <label>Choose a Profile Picture (optional)</label>
-          <input type="file" (change)="onFileSelected($event)">
+        <div class="file-upload">
+          <label for="fileInput" class="upload-label">Choose a Profile Picture (JPEG only)</label>
+          <input #fileInput id="fileInput" type="file" accept=".jpg, .jpeg" (change)="onFileSelected($event)" hidden>
+
+          <button mat-flat-button color="primary" type="button" (click)="fileInput.click()">Upload</button>
+
+          <span *ngIf="profilePictureName">{{ profilePictureName }}</span>
+
+          <button
+            *ngIf="profilePictureName"
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="removeFile()">
+            <mat-icon>close</mat-icon>
+          </button>
         </div>
 
 
