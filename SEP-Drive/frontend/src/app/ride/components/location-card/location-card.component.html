@@ -4,11 +4,11 @@
     <span class="location-label">{{ label }}</span>
   </div>
   <mat-card-content>
-    <div class="location-field name">
+    <div *ngIf="location.name" class="location-field name">
       <span class="field-title">Name:</span>
       <span class="field-value bold">{{ location.name }}</span>
     </div>
-    <div class="location-field">
+    <div *ngIf="location.address" class="location-field">
       <span class="field-title">Address:</span>
       <span class="field-value">{{ location.address }}</span>
     </div>
