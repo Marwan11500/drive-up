@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
+import {Router} from '@angular/router';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {AuthService} from '../../../auth/auth.service';
+import {RideRequestService} from '../../../ride/services/ride-request.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../auth/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  activeRide: boolean = false;
   isLoggedIn: boolean = false;
   username: string = '';
   photoUrl: string = '';
@@ -24,8 +26,10 @@ export class NavbarComponent implements OnInit {
   constructor(
     private readonly dialogue: MatDialog,
     private readonly router: Router,
-    private readonly authService: AuthService
-    ) {}
+    private readonly authService: AuthService,
+    private readonly rideService: RideRequestService
+  ) {
+  }
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((user) => {
@@ -39,6 +43,11 @@ export class NavbarComponent implements OnInit {
         this.photoUrl = '';
       }
     });
+
+    this.rideService.activeRide$.subscribe((value) => {
+      this.activeRide = value;
+    });
+
   }
 
   openLoginDialog() {
@@ -73,4 +82,11 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  routeToRideRequest() {
+    this.router.navigate([`/ride/request`]);
+  }
+
+  routeToActiveRide() {
+    this.router.navigate([`/ride/active`]);
+  }
 }

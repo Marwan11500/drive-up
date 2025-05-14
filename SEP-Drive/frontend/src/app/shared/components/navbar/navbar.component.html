@@ -1,6 +1,18 @@
 <mat-toolbar class="navbar">
   <button mat-button class="navbar-title" (click)="goHome()">SEP-Drive</button>
+
+  <button
+    *ngIf="isLoggedIn"
+    mat-raised-button
+    color="accent"
+    class="nav-btn"
+    (click)="activeRide ? routeToActiveRide() : routeToRideRequest()">
+    {{ activeRide ? 'Active Request' : 'Request Ride' }}
+  </button>
+
+
   <span class="spacer"></span>
+
 
   <!-- 🔎 Search Bar -->
   <div class="search-wrapper">

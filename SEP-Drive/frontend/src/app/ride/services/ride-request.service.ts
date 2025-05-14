@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Ride} from '../models/ride.model';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,12 @@ export class RideRequestService {
 
   public deactivateRide(username: string) {
     return this.http.delete<Ride>(this.baseUrl + '/' + username)
+  }
+
+  private activeRideSubject = new BehaviorSubject<boolean>(false);
+  activeRide$ = this.activeRideSubject.asObservable();
+
+  setActiveRide(value: boolean) {
+    this.activeRideSubject.next(value);
   }
 }

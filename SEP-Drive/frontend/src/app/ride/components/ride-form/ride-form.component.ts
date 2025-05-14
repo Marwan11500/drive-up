@@ -179,6 +179,7 @@ export class RideFormComponent implements OnInit {
     this.rideService.submitRide(rideDataJson).subscribe({
       next: response => {
         console.log('Submitted:', response);
+        this.rideService.setActiveRide(true);
         this.router.navigate(['/ride/active']);
       },
       error: error => {
