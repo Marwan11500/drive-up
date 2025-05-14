@@ -3,6 +3,7 @@ package com.example.sep_drive_backend.dto;
 import com.example.sep_drive_backend.constants.VehicleClassEnum;
 import com.example.sep_drive_backend.models.Customer;
 import com.example.sep_drive_backend.models.RideRequest;
+import jakarta.persistence.Column;
 
 public class RideRequestDTO {
 
@@ -17,11 +18,15 @@ public class RideRequestDTO {
         this.startLongitude = request.getStartLongitude();
         this.destinationLatitude = request.getDestinationLatitude();
         this.destinationLongitude = request.getDestinationLongitude();
+        this.startLocationName = request.getStartLocationName();
+        this.DestinationLocationName = request.getDestinationLocationName();
     }
 
 
     private String userName;
 
+    private String startLocationName;
+    private String DestinationLocationName;
 
     private String startAddress;
 
@@ -36,6 +41,21 @@ public class RideRequestDTO {
 
     private VehicleClassEnum vehicleClass;
 
+    public String getStartLocationName() {
+        return startLocationName;
+    }
+
+    public void setStartLocationName(String startLocationName) {
+        this.startLocationName = startLocationName;
+    }
+
+    public String getDestinationLocationName() {
+        return DestinationLocationName;
+    }
+
+    public void setDestinationLocationName(String destinationLocationName) {
+        DestinationLocationName = destinationLocationName;
+    }
 
     public Double getStartLatitude() {
         return startLatitude;
