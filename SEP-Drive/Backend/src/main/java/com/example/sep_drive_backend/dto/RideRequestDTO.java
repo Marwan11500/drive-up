@@ -19,7 +19,7 @@ public class RideRequestDTO {
         this.destinationLatitude = request.getDestinationLatitude();
         this.destinationLongitude = request.getDestinationLongitude();
         this.startLocationName = request.getStartLocationName();
-        this.startLocationName = request.getStartLocationName();
+        this.DestinationLocationName = request.getDestinationLocationName();
     }
 
 
