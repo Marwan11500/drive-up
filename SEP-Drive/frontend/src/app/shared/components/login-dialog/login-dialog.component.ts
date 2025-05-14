@@ -30,6 +30,10 @@ export class LoginDialogComponent {
   }
 
   onLogin() {
+    if (!this.username && !this.password) {
+      this.errorMessage = "Please enter a username and password.";
+      return;
+    }
     this.authService.loginUser(this.username, this.password).subscribe({
       next: (response) => {
         console.log("Login successful:", response);
@@ -52,7 +56,7 @@ export class LoginDialogComponent {
           this.dialogRef.close();
           this.open2FADialog();
         } else {
-          this.errorMessage = "Login failed. Please try again.";
+          this.errorMessage = "Login failed incorrect username or password. Please try again.";
         }
       }
     });

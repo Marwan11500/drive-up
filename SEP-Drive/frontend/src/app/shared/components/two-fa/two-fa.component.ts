@@ -23,6 +23,9 @@ export class TwoFaComponent {
     this.username = data.username;
     console.log("✅ Received Username in 2FA Dialog:", this.username);
   }
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 
   verifyCode() {
     console.log('Entered Code:', this.verificationCode);
@@ -32,6 +35,12 @@ export class TwoFaComponent {
     if (!username) {
       this.errorMessage = "User not found. Please log in again.";
       return;
+    }
+    if (this.verificationCode.length === 6) {
+      console.log('Verification code:', this.verificationCode);
+      this.dialogRef.close();
+    } else {
+      console.log('Invalid code length');
     }
 
     // 🔐 Call the service to verify the code

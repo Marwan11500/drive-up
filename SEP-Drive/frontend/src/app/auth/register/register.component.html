@@ -1,12 +1,6 @@
 
 <div class="form-container">
 
-  <ng-container *ngIf="alertMessage">
-    <div class="alert" [class.success]="alertType==='success'" [class.error]="alertType==='error'">
-      {{ alertMessage }}
-    </div>
-  </ng-container>
-
   <mat-card class="register-card">
     <mat-card-header>
       <mat-card-title>Register</mat-card-title>
@@ -120,7 +114,7 @@
 
 
         <div class="file-upload">
-          <label for="fileInput" class="upload-label">Choose a Profile Picture (JPEG only)</label>
+          <label for="fileInput" class="upload-label">select ProfilePicture (optional) <br>(JPEG only)</label>
           <input #fileInput id="fileInput" type="file" accept=".jpg, .jpeg" (change)="onFileSelected($event)" hidden>
 
           <button mat-flat-button color="primary" type="button" (click)="fileInput.click()">Upload</button>
@@ -136,6 +130,12 @@
             <mat-icon>close</mat-icon>
           </button>
         </div>
+        <ng-container *ngIf="alertMessage">
+          <div class="alert" [class.success]="alertType==='success'" [class.error]="alertType==='error'">
+            {{ alertMessage }}
+          </div>
+        </ng-container>
+
 
 
         <div class="register-button-container">
