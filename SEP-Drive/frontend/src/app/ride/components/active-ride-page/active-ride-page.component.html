@@ -1,32 +1,34 @@
-<div style="width: 500px; float: left;">
-  <app-location-card
-    [location]="activeRide.pickup"
-    label="Pick up at">
-  </app-location-card>
-
-
-  <ng-container *ngFor="let stopover of activeRide.stopovers; index as i">
+<div class="center-wrapper">
+  <div style="width: 500px; float: left;">
     <app-location-card
-      [location]="stopover"
-      [label]="'Stopover ' + (i + 1)">
+      [location]="activeRide.pickup"
+      label="Pick up at">
     </app-location-card>
-  </ng-container>
-
-  <app-location-card
-    [location]="activeRide.dropoff"
-    label="Drop off at">
-  </app-location-card>
-
-  <mat-card class="vehicle-card" appearance="outlined">
-    <div class="vehicle-header">
-      <mat-icon>local_taxi</mat-icon>
-      <span class="vehicle-label">Selected Vehicle Class</span></div>
-    <mat-card-content><span class="vehicle-class">{{ activeRide.vehicleClass }}</span></mat-card-content>
-  </mat-card>
 
 
-  <button mat-fab extended class="deactivation-btn" (click)="deactivateRide()">
-    Deactivate your ride
-  </button>
+    <ng-container *ngFor="let stopover of activeRide.stopovers; index as i">
+      <app-location-card
+        [location]="stopover"
+        [label]="'Stopover ' + (i + 1)">
+      </app-location-card>
+    </ng-container>
 
+    <app-location-card
+      [location]="activeRide.dropoff"
+      label="Drop off at">
+    </app-location-card>
+
+    <mat-card class="vehicle-card" appearance="outlined">
+      <div class="vehicle-header">
+        <mat-icon>local_taxi</mat-icon>
+        <span class="vehicle-label">Selected Vehicle Class</span></div>
+      <mat-card-content><span class="vehicle-class">{{ activeRide.vehicleClass }}</span></mat-card-content>
+    </mat-card>
+
+
+    <button mat-fab extended class="deactivation-btn" (click)="deactivateRide()">
+      Deactivate your ride
+    </button>
+
+  </div>
 </div>
