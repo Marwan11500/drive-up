@@ -89,6 +89,10 @@ export class RegisterComponent {
     if (this.vehicleClass) {
       formData.append('vehicleClass', this.vehicleClass);
     }
+    if(!this.role ){
+      this.showAlert('Please select a role.', 'error');
+      return;
+    }
     if (this.role === 'Driver' && !this.vehicleClass) {
       this.showAlert('Please select a vehicle class.', 'error');
       return;
