@@ -45,7 +45,6 @@ export class ActiveRidePageComponent implements OnInit {
     this.rideService.getRide(username).subscribe({
         next: response => {
           this.activeRide = this.mapToRide(response);
-          console.log('myride', this.activeRide);
         },
         error: err => console.log('myerror', err)
       }

@@ -22,7 +22,6 @@
 
   .location-field {
     display: flex;
-    justify-content: space-between;
     padding: 4px 0;
 
     .field-title {
@@ -33,6 +32,8 @@
     .field-value {
       font-weight: 400;
       color: #222;
+      text-align: right;
+      flex: 1;
     }
 
     &.name .field-value.bold {
