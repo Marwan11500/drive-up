@@ -14,6 +14,7 @@ import {RideRequestService} from '../../services/ride-request.service';
 export class ActiveRidePageComponent implements OnInit {
 
   activeRide!: Ride;
+  userHasActiveRide: boolean = true;
 
   constructor(
     private rideService: RideRequestService,
@@ -28,7 +29,7 @@ export class ActiveRidePageComponent implements OnInit {
 
     this.rideService.deactivateRide(username).subscribe({
       next: () => {
-        this.rideService.setActiveRide(false, username);
+        this.rideService.updateActiveRideStatus(username);
         this.router.navigate(['/ride/request']);
       },
       error: (err) => {
@@ -42,13 +43,20 @@ export class ActiveRidePageComponent implements OnInit {
     const user = JSON.parse(<string>localStorage.getItem('currentUser'));
     const username = user?.username;
 
-    this.rideService.getRide(username).subscribe({
-        next: response => {
-          this.activeRide = this.mapToRide(response);
-        },
-        error: err => console.log('myerror', err)
-      }
-    )
+    this.rideService.userHasActiveRide(username).subscribe({
+      next: hasActive => {
+        this.userHasActiveRide = hasActive;
+        if (hasActive) {
+          this.rideService.getRide(username).subscribe({
+            next: response => {
+              this.activeRide = this.mapToRide(response);
+            },
+            error: err => console.log(err)
+          });
+        }
+      },
+      error: err => console.log(err)
+    });
   }
 
   private mapToRide(raw: any): Ride {

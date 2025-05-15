@@ -26,28 +26,19 @@ export class RideRequestService {
     return this.http.delete<Ride>(this.baseUrl + '/' + username)
   }
 
-  private activeRideSubjects: { [username: string]: BehaviorSubject<boolean> } = {};
-
-  getActiveRide(username: string): Observable<boolean> {
-    if (!this.activeRideSubjects[username]) {
-      const stored = this.getStoredActiveRide(username);
-      this.activeRideSubjects[username] = new BehaviorSubject<boolean>(stored);
-    }
-    return this.activeRideSubjects[username].asObservable();
+  public userHasActiveRide(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/${username}/has-active`);
   }
 
-  setActiveRide(value: boolean, username: string): void {
-    if (!this.activeRideSubjects[username]) {
-      this.activeRideSubjects[username] = new BehaviorSubject<boolean>(value);
-    } else {
-      this.activeRideSubjects[username].next(value);
-    }
-    localStorage.setItem(`activeRide-${username}`, JSON.stringify(value));
-  }
+  private activeRideStatus = new BehaviorSubject<boolean>(false);
 
-  getStoredActiveRide(username: string): boolean {
-    const stored = localStorage.getItem(`activeRide-${username}`);
-    return stored ? JSON.parse(stored) : false;
+  public activeRideStatus$ = this.activeRideStatus.asObservable();
+
+  updateActiveRideStatus(username: string): void {
+    this.userHasActiveRide(username).subscribe({
+      next: status => this.activeRideStatus.next(status),
+      error: err => console.error(err)
+    });
   }
 
 }

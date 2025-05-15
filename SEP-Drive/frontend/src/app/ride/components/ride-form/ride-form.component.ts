@@ -55,7 +55,10 @@ export class RideFormComponent implements OnInit {
     const user = JSON.parse(<string>localStorage.getItem('currentUser'));
     const username = user?.username;
 
-    this.ride.active = this.rideService.getStoredActiveRide(username);
+    this.rideService.userHasActiveRide(username).subscribe({
+      next: response => this.ride.active = response,
+      error: err => console.log(err)
+    })
 
     this.filteredPickupOptions = this.setupAutocomplete(this.pickupControl);
     this.filteredDropoffOptions = this.setupAutocomplete(this.dropoffControl);
@@ -137,9 +140,6 @@ export class RideFormComponent implements OnInit {
     const user = JSON.parse(<string>localStorage.getItem('currentUser'));
     const username = user?.username;
 
-    if (this.ride.active)
-      return;
-
     const rideDataJson: any = {
       userName: username,
       vehicleClass: this.ride.vehicleClass,
@@ -156,9 +156,8 @@ export class RideFormComponent implements OnInit {
     console.log("this is the file to send to database:", rideDataJson)
 
     this.rideService.submitRide(rideDataJson).subscribe({
-      next: response => {
-        console.log('Submitted:', response);
-        this.rideService.setActiveRide(true, username);
+      next: () => {
+        this.rideService.updateActiveRideStatus(username);
         this.router.navigate(['/ride/active']);
       },
       error: error => {

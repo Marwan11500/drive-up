@@ -44,8 +44,11 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-    this.rideService.getActiveRide(this.username).subscribe((value) => {
-      this.activeRide = value;
+    this.rideService.updateActiveRideStatus(this.username);
+    this.rideService.activeRideStatus$.subscribe({
+      next: (status: boolean) => {
+        this.activeRide = status;
+      }
     });
   }
 
