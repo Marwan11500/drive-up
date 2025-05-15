@@ -19,7 +19,7 @@ public class LoginService {
 
 
     //    @Value("${SUPER_CODE}") later for yml (use as environment variable)
-    private static final String SUPER_CODE = "super";
+    private static final String SUPER_CODE = "super1";
 
     private final DriverRepository driverRepository;
     private final CustomerRepository customerRepository;
