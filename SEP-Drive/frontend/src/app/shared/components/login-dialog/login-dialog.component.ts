@@ -30,7 +30,7 @@ export class LoginDialogComponent {
   }
 
   onLogin() {
-    if (!this.username && !this.password) {
+    if (!this.username || !this.password) {
       this.errorMessage = "Please enter a username and password.";
       return;
     }

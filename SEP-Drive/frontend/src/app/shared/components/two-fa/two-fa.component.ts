@@ -28,6 +28,10 @@ export class TwoFaComponent {
   }
 
   verifyCode() {
+    if(this.verificationCode.length !== 6) {
+      this.errorMessage = "Invalid code length. Please try again.";
+      return;
+    }
     console.log('Entered Code:', this.verificationCode);
 
     const username = this.username;
@@ -35,12 +39,6 @@ export class TwoFaComponent {
     if (!username) {
       this.errorMessage = "User not found. Please log in again.";
       return;
-    }
-    if (this.verificationCode.length === 6) {
-      console.log('Verification code:', this.verificationCode);
-      this.dialogRef.close();
-    } else {
-      console.log('Invalid code length');
     }
 
     // 🔐 Call the service to verify the code
