@@ -1,7 +1,7 @@
 <form>
   <app-location-autocomplete
     [label]="'Pickup Location'"
-    [placeholder]="'Home'"
+    [placeholder]="'Restaurant'"
     [control]="pickupControl"
     (locationSelected)="onLocationSelected($event, updateType.pickup)"
     (pinClicked)="pinLocation(updateType.pickup)">
@@ -14,27 +14,6 @@
   </app-location-autocomplete>
 
   <app-location-autocomplete
-    *ngFor="let control of stopoversControl.controls; let i = index"
-    [label]="'Stopover ' + (i + 1)"
-    [placeholder]="'I want to stop by ...'"
-    [control]="control"
-    (locationSelected)="onStopoverLocationSelected($event, i)"
-    (pinClicked)="pinLocation(i)">
-
-    <button mat-icon-button matSuffix (click)="removeStopover(i)" type="button" class="delete-btn"
-            matTooltip="Remove this stopover"
-            matTooltipPosition="right">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </app-location-autocomplete>
-
-  <div class="padding">
-    <button mat-fab extended class="wide-btn" type="button" (click)="addStopover()">
-      Add Stopover
-    </button>
-  </div>
-
-  <app-location-autocomplete
     [label]="'Drop-off Location'"
     [placeholder]="'Cinema'"
     [control]="dropoffControl"
@@ -42,6 +21,7 @@
     (pinClicked)="pinLocation(updateType.dropoff)">
   </app-location-autocomplete>
 
+  <div class="form-label">Select a vehicle class:</div>
   <mat-radio-group [(ngModel)]="ride.vehicleClass" name="vehicleClass">
     <mat-radio-button *ngFor="let car of vehicles" [value]="car">
       {{ car }}

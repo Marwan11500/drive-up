@@ -70,7 +70,6 @@ export class ActiveRidePageComponent implements OnInit {
     const ride: Ride = {
       pickup,
       dropoff,
-      stopovers: [], // TODO UPDATE WITH STOPOVERS WHEN AVAILABLE
       vehicleClass: raw.vehicleClass as VehicleClass,
       active: true
     };

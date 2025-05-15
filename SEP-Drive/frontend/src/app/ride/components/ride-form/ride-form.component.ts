@@ -6,15 +6,15 @@ import {Ride, VehicleClass} from '../../models/ride.model';
 import {GeolocationService} from '../../services/geolocation.service';
 import {PlacesService} from '../../services/places.service';
 
-import {FormArray, FormControl, Validators} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {catchError, debounceTime, distinctUntilChanged, Observable, of, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {RideRequestService} from '../../services/ride-request.service';
 
 enum updateType {
-  pickup = -2,
-  dropoff = -1,
+  pickup,
+  dropoff,
 }
 
 @Component({
@@ -28,14 +28,12 @@ export class RideFormComponent implements OnInit {
   ride: Ride = {
     pickup: {latitude: 0, longitude: 0},
     dropoff: {latitude: 0, longitude: 0},
-    stopovers: [],
     vehicleClass: VehicleClass.SMALL,
     active: false
   };
 
   pickupControl = new FormControl<Location | string>('', [Validators.required]);
   dropoffControl = new FormControl<Location | string>('', [Validators.required]);
-  stopoversControl = new FormArray<FormControl<Location | string | null>>([]);
 
   filteredPickupOptions!: Observable<Location[]>;
   filteredDropoffOptions!: Observable<Location[]>;
@@ -53,11 +51,6 @@ export class RideFormComponent implements OnInit {
   ngOnInit() {
     this.filteredPickupOptions = this.setupAutocomplete(this.pickupControl);
     this.filteredDropoffOptions = this.setupAutocomplete(this.dropoffControl);
-
-    this.ride.stopovers.forEach((loc) => {
-      const control = new FormControl<Location | string>(loc);
-      this.stopoversControl.push(control);
-    });
   }
 
   onSearch(query: string) {
@@ -84,25 +77,7 @@ export class RideFormComponent implements OnInit {
       case updateType.dropoff:
         this.ride.dropoff = location;
         break;
-      default:
-        throw new Error(`Unknown updateType: ${type}`);
     }
-    console.log(this.ride);
-  }
-
-  onStopoverLocationSelected(location: Location, index: number) {
-    this.ride.stopovers[index] = location;
-  }
-
-  addStopover() {
-    const control = new FormControl<Location | string>('', [Validators.required]);
-    this.stopoversControl.push(control);
-    this.ride.stopovers.push({latitude: 0, longitude: 0});
-  }
-
-  removeStopover(index: number) {
-    this.stopoversControl.removeAt(index);
-    this.ride.stopovers.splice(index, 1);
   }
 
   myLocation() {
@@ -120,8 +95,8 @@ export class RideFormComponent implements OnInit {
     const mockupLocation: Location = {
       latitude: 50,
       longitude: 50,
-      name: 'Mockup Location',
-      address: '12345 Street City State'
+      name: 'Pin Location',
+      address: 'This is a mockup address'
     };
 
     switch (type) {
@@ -135,20 +110,13 @@ export class RideFormComponent implements OnInit {
         this.dropoffControl.setValue(mockupLocation);
         this.onLocationSelected(mockupLocation, updateType.dropoff);
         break;
-
-      default:
-        this.ride.stopovers[type] = mockupLocation;
-        const control = this.stopoversControl.at(type);
-        control.setValue(mockupLocation);
-
     }
   }
 
   get isFormInvalid(): boolean {
     return (
       this.pickupControl.invalid ||
-      this.dropoffControl.invalid ||
-      this.stopoversControl.controls.some(c => c.invalid)
+      this.dropoffControl.invalid
     );
   }
 

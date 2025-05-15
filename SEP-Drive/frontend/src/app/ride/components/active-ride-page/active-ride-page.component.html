@@ -1,17 +1,10 @@
 <div class="centered-box">
   <div style="width: 500px; float: left;">
+
     <app-location-card
       [location]="activeRide.pickup"
       label="Pick up at">
     </app-location-card>
-
-
-    <ng-container *ngFor="let stopover of activeRide.stopovers; index as i">
-      <app-location-card
-        [location]="stopover"
-        [label]="'Stopover ' + (i + 1)">
-      </app-location-card>
-    </ng-container>
 
     <app-location-card
       [location]="activeRide.dropoff"
