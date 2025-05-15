@@ -64,6 +64,9 @@ public class RideRequestService {
         return repository.findByCustomerUsernameAndCustomerActiveTrue(username)
                 .orElseThrow(() -> new NoSuchElementException("No active ride request found for user: " + username));
     }
+    public boolean hasActiveRideRequest(String username) {
+        return repository.findByCustomerUsernameAndCustomerActiveTrue(username).isPresent();
+    }
 
     public void deleteActiveRideRequest(String username) {
         RideRequest request = repository.findByCustomerUsernameAndCustomerActiveTrue(username)
