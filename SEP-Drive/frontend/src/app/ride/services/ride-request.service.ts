@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Ride} from '../models/ride.model';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +26,28 @@ export class RideRequestService {
     return this.http.delete<Ride>(this.baseUrl + '/' + username)
   }
 
-  private activeRideSubject = new BehaviorSubject<boolean>(false);
-  activeRide$ = this.activeRideSubject.asObservable();
+  private activeRideSubjects: { [username: string]: BehaviorSubject<boolean> } = {};
 
-  setActiveRide(value: boolean) {
-    this.activeRideSubject.next(value);
+  getActiveRide(username: string): Observable<boolean> {
+    if (!this.activeRideSubjects[username]) {
+      const stored = this.getStoredActiveRide(username);
+      this.activeRideSubjects[username] = new BehaviorSubject<boolean>(stored);
+    }
+    return this.activeRideSubjects[username].asObservable();
   }
+
+  setActiveRide(value: boolean, username: string): void {
+    if (!this.activeRideSubjects[username]) {
+      this.activeRideSubjects[username] = new BehaviorSubject<boolean>(value);
+    } else {
+      this.activeRideSubjects[username].next(value);
+    }
+    localStorage.setItem(`activeRide-${username}`, JSON.stringify(value));
+  }
+
+  getStoredActiveRide(username: string): boolean {
+    const stored = localStorage.getItem(`activeRide-${username}`);
+    return stored ? JSON.parse(stored) : false;
+  }
+
 }

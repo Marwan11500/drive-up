@@ -28,7 +28,7 @@ export class ActiveRidePageComponent implements OnInit {
 
     this.rideService.deactivateRide(username).subscribe({
       next: () => {
-        this.rideService.setActiveRide(false);
+        this.rideService.setActiveRide(false, username);
         this.router.navigate(['/ride/request']);
       },
       error: (err) => {

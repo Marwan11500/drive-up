@@ -32,6 +32,9 @@ export class RideFormComponent implements OnInit {
     active: false
   };
 
+  pickupPicked: boolean = false;
+  dropoffPicked: boolean = false;
+
   pickupControl = new FormControl<Location | string>('', [Validators.required]);
   dropoffControl = new FormControl<Location | string>('', [Validators.required]);
 
@@ -49,6 +52,11 @@ export class RideFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user = JSON.parse(<string>localStorage.getItem('currentUser'));
+    const username = user?.username;
+
+    this.ride.active = this.rideService.getStoredActiveRide(username);
+
     this.filteredPickupOptions = this.setupAutocomplete(this.pickupControl);
     this.filteredDropoffOptions = this.setupAutocomplete(this.dropoffControl);
   }
@@ -72,9 +80,11 @@ export class RideFormComponent implements OnInit {
   onLocationSelected(location: Location, type: updateType) {
     switch (type) {
       case updateType.pickup:
+        this.pickupPicked = true;
         this.ride.pickup = location;
         break;
       case updateType.dropoff:
+        this.dropoffPicked = true;
         this.ride.dropoff = location;
         break;
     }
@@ -83,6 +93,7 @@ export class RideFormComponent implements OnInit {
   myLocation() {
     this.geolocationService.getLocation().subscribe({
       next: (myLocation: Location) => {
+        this.pickupPicked = true;
         this.ride.pickup = myLocation;
         this.ride.pickup.name = "My Location";
         this.pickupControl.setValue(myLocation);
@@ -115,8 +126,9 @@ export class RideFormComponent implements OnInit {
 
   get isFormInvalid(): boolean {
     return (
-      this.pickupControl.invalid ||
-      this.dropoffControl.invalid
+      this.ride.active ||
+      !this.pickupPicked ||
+      !this.dropoffPicked
     );
   }
 
@@ -124,6 +136,9 @@ export class RideFormComponent implements OnInit {
 
     const user = JSON.parse(<string>localStorage.getItem('currentUser'));
     const username = user?.username;
+
+    if (this.ride.active)
+      return;
 
     const rideDataJson: any = {
       userName: username,
@@ -143,7 +158,7 @@ export class RideFormComponent implements OnInit {
     this.rideService.submitRide(rideDataJson).subscribe({
       next: response => {
         console.log('Submitted:', response);
-        this.rideService.setActiveRide(true);
+        this.rideService.setActiveRide(true, username);
         this.router.navigate(['/ride/active']);
       },
       error: error => {

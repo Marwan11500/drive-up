@@ -44,10 +44,9 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-    this.rideService.activeRide$.subscribe((value) => {
+    this.rideService.getActiveRide(this.username).subscribe((value) => {
       this.activeRide = value;
     });
-
   }
 
   openLoginDialog() {

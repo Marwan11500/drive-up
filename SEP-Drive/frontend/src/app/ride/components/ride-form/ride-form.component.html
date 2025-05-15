@@ -33,4 +33,9 @@
       Submit Ride Request
     </button>
   </div>
+
+  <div class="alert error" *ngIf="ride.active">
+    <mat-error>You can not request a ride while already having an active ride.</mat-error>
+  </div>
+
 </form>
