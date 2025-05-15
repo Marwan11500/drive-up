@@ -53,15 +53,16 @@ export class ActiveRidePageComponent implements OnInit {
   }
 
   private mapToRide(raw: any): Ride {
+
     const pickup: Location = {
-      // name: 'raw.name
+      name: raw.startLocationName || undefined,
       latitude: Number(raw.startLatitude),
       longitude: Number(raw.startLongitude),
       address: raw.startAddress || undefined,
     };
 
     const dropoff: Location = {
-      // name: 'raw.name
+      name: raw.destinationLocationName || undefined,
       latitude: Number(raw.destinationLatitude),
       longitude: Number(raw.destinationLongitude),
       address: raw.destinationAddress || undefined,

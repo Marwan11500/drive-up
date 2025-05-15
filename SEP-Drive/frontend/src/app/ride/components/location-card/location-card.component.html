@@ -8,7 +8,7 @@
       <span class="field-title">Name:</span>
       <span class="field-value bold">{{ location.name }}</span>
     </div>
-    <div *ngIf="location.address" class="location-field">
+    <div *ngIf="location.address !== 'undefined'" class="location-field">
       <span class="field-title">Address:</span>
       <span class="field-value">{{ location.address }}</span>
     </div>

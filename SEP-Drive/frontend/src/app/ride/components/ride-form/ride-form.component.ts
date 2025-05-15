@@ -163,18 +163,14 @@ export class RideFormComponent implements OnInit {
       startLatitude: `${this.ride.pickup.latitude}`,
       startLongitude: `${this.ride.pickup.longitude}`,
       destinationLatitude: `${this.ride.dropoff.latitude}`,
-      destinationLongitude: `${this.ride.pickup.longitude}`,
+      destinationLongitude: `${this.ride.dropoff.longitude}`,
+      startLocationName: `${this.ride.pickup.name}`,
+      destinationLocationName: `${this.ride.dropoff.name}`,
+      startAddress: `${this.ride.pickup.address}`,
+      destinationAddress: `${this.ride.dropoff.address}`
     };
 
-    if (this.ride.pickup.address) {
-      rideDataJson.startAddress = this.ride.pickup.address;
-    }
-
-    if (this.ride.dropoff.address) {
-      rideDataJson.destinationAddress = this.ride.dropoff.address;
-    }
-
-    console.log(rideDataJson)
+    console.log("this is the file to send to database:", rideDataJson)
 
     this.rideService.submitRide(rideDataJson).subscribe({
       next: response => {
