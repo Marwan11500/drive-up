@@ -23,13 +23,17 @@ import {ActiveRidePageComponent} from './components/active-ride-page/active-ride
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {LocationCardComponent} from './components/location-card/location-card.component';
 
+import {GoogleMap, GoogleMapsModule} from '@angular/google-maps';
+import { MapComponent } from './components/map/map.component'
+
 @NgModule({
   declarations: [
     RideFormComponent,
     LocationAutocompleteComponent,
     RidePageComponent,
     ActiveRidePageComponent,
-    LocationCardComponent
+    LocationCardComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,9 @@ import {LocationCardComponent} from './components/location-card/location-card.co
     MatRadioModule,
     MatCard,
     MatCardContent,
-    MatCardTitle
+    MatCardTitle,
+    GoogleMap,
+    GoogleMapsModule
   ],
   providers: [
     GeolocationService,
