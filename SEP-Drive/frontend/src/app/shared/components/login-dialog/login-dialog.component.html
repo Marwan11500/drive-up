@@ -27,10 +27,19 @@
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>
-
       <div class="action-buttons">
-        <button mat-flat-button color="primary" type="submit">Login</button>
-        <button mat-flat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
+        <button
+          mat-flat-button
+          color="warn"
+          type="button"
+          class="cancel-button"
+          (click)="closeDialog()"
+        >
+          Cancel
+        </button>
+        <button mat-flat-button color="primary" type="submit">
+          Login
+        </button>
       </div>
 
       <p class="register-link">

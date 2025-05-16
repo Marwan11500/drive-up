@@ -12,8 +12,18 @@
     </div>
 
     <div class="action-buttons">
-      <button mat-flat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
-      <button mat-flat-button color="primary" type="button" (click)="verifyCode()">Confirm</button>
+      <button
+        mat-flat-button
+        color="warn"
+        type="button"
+        class="cancel-button"
+        (click)="closeDialog()"
+      >
+        Cancel
+      </button>
+      <button mat-flat-button color="primary" type="button" (click)="verifyCode()">
+        Confirm
+      </button>
     </div>
   </div>
 </div>

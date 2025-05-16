@@ -42,13 +42,24 @@
   margin-bottom: 1rem;
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
 .action-buttons button {
   width: 48%;
+}
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-button {
+
+  background-color: #f44336 !important;
+  color: white !important;
+
+  &:hover {
+    background-color: darken(#f44336, 8%) !important;
+  }
 }
 
 @keyframes fadeIn {
