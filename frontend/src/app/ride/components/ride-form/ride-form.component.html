@@ -1,0 +1,70 @@
+<form>
+  <select-location
+    [label]="'Pickup Location'"
+    [placeholder]="'Restaurant'"
+    [control]="pickupControl"
+    [geoLocationButton]="true"
+    (locationSelected)="onLocationSelected($event, updateType.pickup)">
+  </select-location>
+
+  <!--FAHRTEN MIT MEHREREN ZWISCHENSTOPPS-->
+  <select-location
+    *ngFor="let control of stopoversControl.controls; let i = index"
+    [label]="'Stopover ' + (i + 1)"
+    [placeholder]="'I want to stop by ...'"
+    [control]="control"
+    [removable]="true"
+    (onRemove)="removeStopover(i)"
+    (locationSelected)="onLocationSelected($event, i)"
+    >
+  </select-location>
+
+  <div class="button-container">
+    <button mat-fab extended class="btn" type="button" (click)="addStopover()">
+      Add Stopover
+    </button>
+  </div>
+  <!--ENDE DER FAHRTEN MIT MEHREREN ZWISCHENSTOPPS-->
+
+  <select-location
+    [label]="'Drop-off Location'"
+    [placeholder]="'Cinema'"
+    [control]="dropoffControl"
+    (locationSelected)="onLocationSelected($event, updateType.dropoff)">
+  </select-location>
+
+  <br><br>
+  <div class="label">Select a vehicle class:</div>
+  <mat-radio-group
+    [(ngModel)]="ride.vehicleClass"
+    name="vehicleClass"
+    (change)="updateDistanceInfo()"
+    class="radio-group"
+  >
+    <mat-radio-button
+      *ngFor="let car of vehicles"
+      [value]="car"
+      class="radio"
+    >
+      <span class="value">{{ car }}</span>
+    </mat-radio-button>
+  </mat-radio-group>
+  <br>
+
+  <div class="button-container">
+    <button mat-fab extended class="btn" (click)="submit()" [disabled]="isFormInvalid">
+      Submit Request
+    </button>
+  </div>
+
+  <div class="alert error" *ngIf="ride.active">
+    <mat-error>You cannot request a ride while already having an active ride.</mat-error>
+  </div>
+</form>
+
+<div class="label">Estimations:</div>
+<div *ngIf="ride.distance != null && ride.duration != null && ride.estimatedPrice != null">
+  <p><span class="label">Price:</span> {{ ride.estimatedPrice | number:'1.2-2' }} €</p>
+  <p><span class="label">Duration:</span> {{ ride.duration | number:'1.0-0' }} minutes</p>
+  <p><span class="label">Distance:</span> {{ ride.distance | number:'1.1-2' }} km</p>
+</div>

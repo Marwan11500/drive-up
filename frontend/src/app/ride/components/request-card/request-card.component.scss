@@ -1,0 +1,57 @@
+.location-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+app-location-card {
+  flex: calc(50% - 8px);
+  min-width: 280px;
+  padding-bottom: 30px;
+}
+
+// FAHRTEN MIT MEHREREN ZWISCHENSTOPPS
+.header-row {
+  font-weight: 500;
+  color: #555;
+  width: 90px;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.coord {
+  font-style: italic;
+  color: #888;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  background: #DAE2F9;
+  color: #00458F;
+}
+
+.info-btn {
+  font-size: 15px;
+  margin-left: auto; width: 100px; font-weight: bold
+}
+// ENDE DER FAHRTEN MIT MEHREREN ZWISCHENSTOPPS
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header.field {
+  .label {
+    width: 260px;
+  }
+}

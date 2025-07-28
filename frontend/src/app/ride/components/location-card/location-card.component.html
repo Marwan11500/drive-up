@@ -1,0 +1,33 @@
+<mat-card appearance="outlined" class="card">
+  <div class="header">
+    <mat-icon>location_on</mat-icon>
+    <span class="label">{{ label }}</span>
+  </div>
+  <mat-card-content>
+    <div class="field">
+      <span class="title">Name:</span>
+      <span class="value bold">{{ location.name }}</span>
+    </div>
+    <div class="field" *ngIf="location.address !== 'undefined'">
+      <span class="title">Address:</span>
+      <span class="value">{{ location.address }} </span>
+    </div>
+    <div class="field">
+      <span class="title">Latitude:</span>
+      <span class="value grey-italic">{{ location.latitude | number:'1.7-7' }}</span>
+    </div>
+    <div class="field">
+      <span class="title">Longitude:</span>
+      <span class="value grey-italic">{{ location.longitude | number:'1.7-7' }}</span>
+    </div>
+  </mat-card-content>
+
+  <!--LIVE ÄNDERUNGEN WÄHREND DER FAHRT-->
+  <br *ngIf="removable">
+  <div class="button-container" *ngIf="removable">
+    <button class="btn warn" mat-fab extended (click)="remove()" [disabled]="!isSimulationPaused">
+      Remove Stopover
+    </button>
+  </div>
+  <!--ENDE DER LIVE ÄNDERUNGEN WÄHREND DER FAHRT-->
+</mat-card>

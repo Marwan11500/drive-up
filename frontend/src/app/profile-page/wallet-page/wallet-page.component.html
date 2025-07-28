@@ -1,0 +1,62 @@
+<div class="wallet-page fancy">
+  <div class="glass wallet-card">
+    <button mat-icon-button class="back-btn" (click)="goToProfile()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div class="wallet-title">💳 My Wallet</div>
+    <div class="wallet-balance">{{ balance | number:'1.2-2' }} €</div>
+
+    <div *ngIf="accessAllowed" class="topup-section">
+    <label>Select Amount:</label>
+      <mat-button-toggle-group [(ngModel)]="selectedAmount" class="amount-radio-group">
+        <mat-button-toggle [value]="10">       10 €      </mat-button-toggle>
+        <mat-button-toggle [value]="25">       25 €      </mat-button-toggle>
+        <mat-button-toggle [value]="50">       50 €      </mat-button-toggle>
+        <mat-button-toggle [value]="75">       75 €      </mat-button-toggle>
+        <mat-button-toggle [value]="100">      100 €      </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <input
+        type="number"
+        placeholder="Or enter custom amount (€)"
+        [(ngModel)]="selectedAmount"
+        min="1"
+        max="10000"
+      />
+
+      <button mat-raised-button class="topup-button" (click)="topUp()" [disabled]="!selectedAmount || selectedAmount <= 0">
+        💰 Top-Up
+      </button>
+    </div>
+
+    <div *ngIf="success" class="success-message">{{ success }}</div>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+      <div *ngIf="accessAllowed"
+           class="transaction-history" (click)="toggleHistory()" style="cursor:pointer;">
+        Transaction History
+        <mat-icon>{{ showHistory ? 'expand_less' : 'history' }}</mat-icon>
+      </div>
+
+      <div  *ngIf="showHistory">
+        <table style="width:100%; margin-top: 10px;">
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let tx of transactions">
+            <td>{{ tx.createdAt | date:'short' }}</td>
+            <td>{{ (tx.amountCents / 100) | number:'1.2-2' }} €</td>
+          </tr>
+        </table>
+        <div *ngIf="transactions.length === 0" style="text-align:center; color:#888; margin:16px 0;">
+          Keine Transaktionen gefunden.
+        </div>
+      </div>
+
+    <div *ngIf="!accessAllowed" class="driver-message">
+      🚫 Drivers cannot top up their credit themselves.
+    </div>
+  </div>
+</div>

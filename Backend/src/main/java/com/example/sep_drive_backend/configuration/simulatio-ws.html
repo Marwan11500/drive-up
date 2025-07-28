@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ride Simulation Tester</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+<h2>Ride Simulation Tester</h2>
+
+<label>Simulation ID: <input type="number" id="simulationId" value="1"></label>
+<label>Current Index: <input type="number" id="currentIndex" value="0"></label>
+<label>Duration (sec): <input type="number" id="duration" value="10"></label><br><br>
+
+<button onclick="connect()">Connect</button>
+<button onclick="fetchSimulation()">Fetch</button>
+<button onclick="startSimulation()">Start</button>
+<button onclick="pauseSimulation()">Pause</button>
+<button onclick="resumeSimulation()">Resume</button>
+<button onclick="changeSpeed()">Change Speed</button>
+<button onclick="changePoints()">Change Points</button>
+
+<pre id="output" style="white-space: pre-wrap; background: #f8f8f8; padding: 10px; border: 1px solid #ccc;"></pre>
+
+<script>
+    let stompClient = null;
+    let currentSubscription = null;
+
+    function log(msg) {
+        const output = document.getElementById("output");
+        output.textContent += msg + "\n";
+    }
+
+    function connect() {
+        const socket = new SockJS('http://localhost:8080/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            log("✅ Connected: " + frame);
+
+            subscribeToSimulation();
+        }, function (error) {
+            log("❌ Connection error: " + error);
+        });
+    }
+
+    function subscribeToSimulation() {
+        const simulationId = document.getElementById("simulationId").value;
+
+        if (currentSubscription) {
+            currentSubscription.unsubscribe();
+        }
+
+        currentSubscription = stompClient.subscribe("/topic/simulation/" + simulationId, function (message) {
+            const body = JSON.parse(message.body);
+            log("📨 Message received:\n" + JSON.stringify(body, null, 2));
+        });
+
+        log("📡 Subscribed to /topic/simulation/" + simulationId);
+    }
+
+    function getIdAndIndex() {
+        return {
+            rideSimulationId: parseInt(document.getElementById("simulationId").value),
+            currentIndex: parseInt(document.getElementById("currentIndex").value)
+        };
+    }
+
+    function fetchSimulation() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const payload = { rideSimulationId: getIdAndIndex().rideSimulationId };
+        stompClient.send("/app/simulation/fetch", {}, JSON.stringify(payload));
+        log("➡️ Sent fetch:\n" + JSON.stringify(payload));
+    }
+
+    function startSimulation() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const payload = getIdAndIndex();
+        stompClient.send("/app/simulation/start", {}, JSON.stringify(payload));
+        log("➡️ Sent start:\n" + JSON.stringify(payload));
+    }
+
+    function pauseSimulation() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const payload = getIdAndIndex();
+        stompClient.send("/app/simulation/pause", {}, JSON.stringify(payload));
+        log("➡️ Sent pause:\n" + JSON.stringify(payload));
+    }
+
+    function resumeSimulation() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const payload = getIdAndIndex();
+        stompClient.send("/app/simulation/resume", {}, JSON.stringify(payload));
+        log("➡️ Sent resume:\n" + JSON.stringify(payload));
+    }
+
+    function changeSpeed() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const payload = {
+            rideSimulationId: parseInt(document.getElementById("simulationId").value),
+            duration: parseFloat(document.getElementById("duration").value)
+        };
+        stompClient.send("/app/simulation/speed", {}, JSON.stringify(payload));
+        log("➡️ Sent speed change:\n" + JSON.stringify(payload));
+    }
+
+    function changePoints() {
+        if (!stompClient || !stompClient.connected) return log("❌ Not connected");
+        const simId = parseInt(document.getElementById("simulationId").value);
+        const payload = {
+            rideSimulationId: simId,
+            currentIndex: 0,
+            destinationLocationName: "new end",
+            endPoint: { lat: 40.0000, lng: -77.7777 },
+            waypoints: [
+                {
+                    name: "Point A new",
+                    address: "point a new address",
+                    latitude: 11.1111,
+                    longitude: -11.1111,
+                    sequenceOrder: 0
+                },
+                {
+                    name: "Point B",
+                    address: "point b new address",
+                    latitude: 22.2222,
+                    longitude: -222.2222,
+                    sequenceOrder: 1
+                }
+            ]
+        };
+        stompClient.send("/app/simulation/change-points", {}, JSON.stringify(payload));
+        log("➡️ Sent change points:\n" + JSON.stringify(payload));
+    }
+
+</script>
+</body>
+</html>

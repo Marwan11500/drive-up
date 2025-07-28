@@ -1,0 +1,83 @@
+<div class="main-container" *ngIf="accessAllowed && userHasActiveRide && !userHasActiveSimulation">
+
+  <!-- Left Side: Ride Info Panel -->
+  <div class="left-container scroll">
+    <app-location-card
+      [location]="activeRide.pickup"
+      label="Pick up at">
+    </app-location-card>
+
+    <!--FAHRTEN MIT MEHREREN ZWISCHENSTOPPS-->
+    <app-location-card
+      *ngFor="let stopover of activeRide.stopovers; let i = index"
+      [location]="stopover"
+      [label]="'Stopover ' + (i + 1)">
+    </app-location-card>
+    <!--ENDE DER FAHRTEN MIT MEHREREN ZWISCHENSTOPPS-->
+
+    <app-location-card
+      [location]="activeRide.dropoff"
+      label="Drop off at">
+    </app-location-card>
+
+    <mat-card class="card" appearance="outlined">
+      <div class="header">
+        <mat-icon>map</mat-icon>
+        <span class="label">Ride Information</span>
+      </div>
+      <mat-card-content>
+        <div class="field">
+          <span class="title">Price:</span>
+          <span class="value bold">{{ activeRide.estimatedPrice | number:'1.2-2' }} €</span>
+        </div>
+        <div class="field">
+          <span class="title">Distance:</span>
+          <span class="value">{{ activeRide.distance }} km</span>
+        </div>
+        <div class="field">
+          <span class="title">Duration:</span>
+          <span class="value">{{ activeRide.duration }} minutes</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card" appearance="outlined">
+      <div class="header">
+        <mat-icon>local_taxi</mat-icon>
+        <span class="label">Selected Vehicle Class</span>
+      </div>
+      <mat-card-content>
+        <div class="field">
+          <span class="value bold">{{ activeRide.vehicleClass }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="button-container">
+      <button mat-fab extended class="btn" [routerLink]="['/ride/offer']">
+        View Offers
+      </button>
+
+      <button mat-fab extended class="btn warn" (click)="deactivateRide()">
+        Deactivate your Request
+      </button>
+    </div>
+  </div>
+
+  <!-- Right Side: Map -->
+  <div class="right-container map">
+    <app-map></app-map>
+  </div>
+</div>
+
+<div *ngIf="accessAllowed && userHasActiveSimulation" class="alert error mini centered-box">
+  Please complete your Simulation first.
+</div>
+
+<div *ngIf="accessAllowed && !userHasActiveRide && !userHasActiveSimulation" class="alert error mini centered-box">
+  Please submit a request first.
+</div>
+
+<div *ngIf="!accessAllowed" class="alert error mini centered-box">
+  Please log in as a Customer first.
+</div>

@@ -1,0 +1,49 @@
+<div class="profile-page fancy">
+  <div class="glass profile-header">
+    <img
+      [ngSrc]="profileData?.profilePicture || 'assets/placeholder.png'"
+      alt="UserPic"
+      class="profile-photo-glow"
+      width="180"
+      height="180"
+    />
+
+    <div class="profile-basic">
+      <div class="username-badge">
+        <h1 class="username">{{ profileData?.username }}</h1>
+        <span class="role-badge" *ngIf="profileData?.role">{{ profileData.role }}</span>
+      </div>
+
+      <div class="rating" *ngIf="profileData?.rating !== undefined">
+        <span class="stars">
+          <ng-container *ngFor="let star of getFullStars()">⭐</ng-container>
+          <ng-container *ngIf="hasHalfStar()">✰</ng-container>
+        </span>
+      </div>
+
+      <div class="action-buttons" *ngIf="isOwnProfile">
+        <button mat-raised-button routerLink="/wallet">
+          <mat-icon>account_balance_wallet</mat-icon> Wallet
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass profile-details">
+    <p><strong>First Name:</strong> {{ profileData?.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ profileData?.lastName }}</p>
+    <p><strong>Email:</strong> {{ profileData?.email }}</p>
+    <p><strong>Birthdate:</strong> {{ profileData?.birthDate | date: 'MM-dd-yyyy' }}</p>
+    <p><strong>Total Rides:</strong> {{ profileData?.totalRides }}</p>
+    <p *ngIf="profileData?.role === 'Driver'">
+      <strong>Vehicle Class:</strong>
+      {{ profileData?.vehicleClass || 'Not specified' }}
+    </p>
+  </div>
+
+  <div class="logout-wrapper" *ngIf="isOwnProfile">
+    <button mat-raised-button color="warn" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</div>

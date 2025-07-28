@@ -1,0 +1,112 @@
+<mat-toolbar class="navbar">
+    <img
+      src="assets/Logo.png"
+      alt="SEP-Drive Logo"
+      class="navbar-logo"
+      (click)="goHome()"
+      style="height:35px; cursor:pointer; margin-right:10px;"
+    >
+
+  <div *ngIf="isLoggedIn">
+    <button *ngIf="userHasActiveSimulation"
+            mat-raised-button
+            color="accent"
+            class="nav-btn"
+            [routerLink]="['/simulation']"
+    >
+      Active Simulation
+    </button>
+
+    <button *ngIf="isCustomer && !userHasActiveSimulation"
+            mat-raised-button
+            color="accent"
+            class="nav-btn"
+            [routerLink]="userHasActiveRide? ['/ride/active'] : ['/ride/request']"
+    >
+      {{ userHasActiveRide ? 'Active Request' : 'Request Ride' }}
+    </button>
+
+    <button *ngIf="!isCustomer && !userHasActiveSimulation"
+            mat-raised-button
+            color="accent"
+            class="nav-btn"
+            [routerLink]="['/ride/available']"
+    >
+      View Requests
+    </button>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <button
+            mat-raised-button
+            color="accent"
+            class="nav-btn"
+            (click)="goToridehistory()"
+    >
+      RideHistory
+    </button>
+  </div>
+  <div *ngIf="isLoggedIn && !isCustomer ">
+    <button
+      mat-raised-button
+      color="accent"
+      class="nav-btn"
+      (click)="goToStatistics()"
+    >
+      Statistics
+    </button>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <button
+      mat-raised-button
+      color="accent"
+      class="nav-btn"
+      (click)="goToLeaderboard()"
+    >
+      Leaderboard
+    </button>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      placeholder="Search Username"
+      [formControl]="usernameControl"
+      (keydown.enter)="searchUser(usernameControl.value)"
+    />
+    <button class="search-button" (click)="searchUser(usernameControl.value)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+
+  <button
+    *ngIf="!isLoggedIn"
+    mat-raised-button
+    color="accent"
+    class="login-button"
+    (click)="openLoginDialog()">
+    Login
+  </button>
+  <div *ngIf="isLoggedIn && walletBalance !== null" class="navbar-wallet" (click)="goToWalletpage()">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <span class="wallet-balance">
+    {{ walletBalance | number:'1.2-2' }} €
+  </span>
+  </div>
+
+  <div *ngIf="isLoggedIn" class="user-info" (click)="goToProfile()">
+    <img
+      ngSrc="{{ photoUrl }}"
+      alt="UserPic"
+      class="user-photo"
+      width="35"
+      height="35"
+      fetchpriority="auto"
+    />
+    <span class="username">{{ username }}</span>
+  </div>
+</mat-toolbar>

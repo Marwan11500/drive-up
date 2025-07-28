@@ -1,0 +1,19 @@
+.left-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  .field {
+    .title {
+      width: 95px;
+    }
+  }
+}
