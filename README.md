@@ -6,32 +6,13 @@ Drive-Up is a full-stack ride-sharing application developed as part of a univers
 
 ![Login](01.png)
 
-![Login](01-smart-booking.png)
+![Login](02.png)
 
-![Login](01-smart-booking.png)
+![Login](03.png)
 
-![Login](01-smart-booking.png)
+![Login](04.png)
 
-![Login](01-smart-booking.png)
-
-![Login](01-smart-booking.png)
-
-![Login](01-smart-booking.png)
-
-![Login](01-smart-booking.png)
-
-![Login](01-smart-booking.png)
-
-
-
-
-
-
-
-
-
-
-
+![Login](05.png)
 
 
 ## 🧩 Features
